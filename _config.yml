@@ -4,7 +4,7 @@ description: >
   Desc
 
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://fl0w0.github.io" # the base hostname & protocol for your site
+url: "https://fl0wo.github.io" # the base hostname & protocol for your site
 
 author:
   fullname: 'Florian Sabani'
