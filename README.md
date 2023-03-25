@@ -1,51 +1,44 @@
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kronik3r/daktilo/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+# Read Me
 
-# Daktilo
-Daktilo is a [Jekyll](jekyllrb.com) theme with a minimal design inspired from typewriters.
+## Todo Wish List
 
-# More info and Live preview
-[Click here](http://daktilo.github.io/) to see the theme in action.
+# Tech Blogs
+- [ ] Competitive Algorithms
+- [ ] AWS CDK - MixPanel Integration
+- [ ] AWS CDK - SES Email Monitoring 
+- [ ] SEO + Angular - Auto Generative SiteMap
+- [ ] AWS CDK - AppSync Auto Transformer
+- [ ] AWS CDK - SQS Traffic Congestion
+- [ ] How to conduct an Expand-Contract
+- [ ] Landing page and Core product - right way to host a website
+- [ ] AWS Timestream as Candlestick Database
+- [ ] AWS Timestream as Candlestick Database
 
-# Features
-- Fully responsive
-- [Disqus](https://disqus.com/) integration for comments.
-- Google Analytics integration.
-- Syntax Highlighter (using [highlight.js](https://highlightjs.org/)).
-- Support for categories.
-- Font-Awesome Icons.
-- Optimized for SEO.
-- Coolest [404 page ever](http://kronik3r.github.io/daktilo/404.html).
+# Life Blogs
+- [ ] Migliori Frasi:
+- [ ] Refuse to Belive circumstances
+- [ ] Some key hints on how to build a CV
 
-# How to use it
-Start by cloning the repository, then check the `_config.yml` file and change it accordingly.
-Note that the `title` property is what will be displayed as logo.
+# Travel Blogs
+- [ ] Estonia Tallinn
+- [ ] Koln Germany
+- [ ] Sardinia
 
-Finally execute `jekyll serve --watch` and head to [localhost:4000](http://127.0.0.1:4000) to see the result.
+# Startup Blogs
+- [ ] How I validate an MVP
+- [ ] 5 Analytics that changed my WebSite
+- [ ] One key secret that changes the way you show the product
 
-# Using categories
-Categories are little bit tricky. Please make sure to do the following for each category:
-
-- Create a file within `categories` folder with the name of your category
-For example let's say that we have a category called `An Awesome Category` you will need to add an `an-awesome-category.html` file with this content:
-
-``` html
----
-layout: category
-category: an-awesome-category
-permalink: /categories/an-awesome-category/
----
-
-```
-
-- Create an entry inside `_data/categories.yml`
-
-``` html
-- slug: an-awesome-category
-  name: An Awesome Category
-```
-
-- Then you will see it in the footer in the `Explore` section.
-
-# License
-
-The contents of this repository is licensed under [The MIT License.](https://opensource.org/licenses/MIT)
+# Books
+- [ ] As A Man Tinketh
+- [ ] Lean Startup
+- [ ] J Curve
+- [ ] Drive
+- [ ] Buy Ology
+- [ ] Building a StoryBrand
+- [ ] Zero To One
+- [ ] Zero To Ipo
+- [ ] Hard Things About Hard Things
+- [ ] Deep Work
+- [ ] Founder Dilemma
+- [ ] Serverless Architecture AWS

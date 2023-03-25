@@ -6,7 +6,7 @@ description: >
 baseurl: "" # the subpath of your site, e.g. /blog/
 
 url: "https://fl0wo.github.io" # the base hostname & protocol for your site
-profilepicture: '../profilepicture.jpeg'
+profilepicture: 'https://fl0wo.github.io/profilepicture.jpeg'
 
 author:
   fullname: 'Florian Sabani'
