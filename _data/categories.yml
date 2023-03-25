@@ -1,11 +1,12 @@
+
+- slug: life
+  name: Life
+
 - slug: tech
   name: Tech
 
 - slug: aws
   name: Aws
-
-- slug: life
-  name: Life
 
 - slug: books
   name: Books

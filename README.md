@@ -15,6 +15,7 @@
 - [ ] AWS Timestream as Candlestick Database
 
 # Life Blogs
+- [X] Welcome
 - [ ] Migliori Frasi:
 - [ ] Refuse to Belive circumstances
 - [ ] Some key hints on how to build a CV
