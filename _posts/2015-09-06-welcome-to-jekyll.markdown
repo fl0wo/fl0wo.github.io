@@ -1,26 +1,22 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-subtitle: "Feel home!"
-date:   2015-09-06 23:34:01
-categories: [design, tool]
+title:  "Welcome."
+subtitle: "See why I'm really doing this"
+date:   2020-09-06 12:34:01
+categories: [life]
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+# Intro
+I have always wanted to share my knowledge with the world.
+# Who am I?
+I’m not an expert on anything, but I can share what I know and help people who are in need.
+# Why do I want to do this?
+Writing blogs takes time and effort, and building a website so everybody can read it, it’s not something quick to do.
 
-Jekyll also offers powerful support for code snippets:
+So why do I want to do it anyway?
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
-
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+During my life in the time I faced some challenges I wish I already knew the solution, or at least, found someone else on the web-facing the same issue as mine.
+I want to write to help others, situated in a position that was similar to mine.
+If I write down solutions to problems I have, and it’s helpful to people that have the same need, I’m helping my similars, in other words, I’m helping my self.
+# Conclusion
+I don't want nothing from people, I just want to collect “points” from God, by helping others and doing good deeds
