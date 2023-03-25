@@ -16,8 +16,7 @@
 
 # Life Blogs
 - [X] Welcome
-- [ ] Fav phrases
-- [ ] Refuse to Belive circumstances
+- [X] Fav phrases
 - [ ] Some key hints on how to build a CV
 
 # Travel Blogs
