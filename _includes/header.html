@@ -1,5 +1,9 @@
 <header class="header">
     <div class="navigation">
+        {% if site.profilepicture %}
+            <img class="profile-picture" src="{{site.profilepicture}}" alt="Florian Sabani profile picture">
+        {% endif %}
+
         <a href="/" class="logo">{{ site.title }}</a>
 
         <ul class="menu">

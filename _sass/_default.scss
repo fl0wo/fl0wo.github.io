@@ -1,6 +1,6 @@
 /* =Base */
 body {
-    font-family: 'Inconsolata', ;
+    font-family: 'ThiccboiBold', ;
     color: $iron;
     background-color: $dorian;
 }
@@ -130,6 +130,7 @@ strong {
 }
 
 .page-title__subtitle {
+    font-family: Thiccboii,sans-serif;
     padding-top: 1rem;
     text-align: center;
     font-weight: 400;
@@ -162,7 +163,7 @@ strong {
 }
 
 .post-teaser__title {
-    font-size: 22px;
+    font-size: 24px;
     color: $iron;
 }
 
@@ -247,6 +248,18 @@ strong {
     margin-top: 100px;
 }
 
+.post-teaser__subtitle {
+    font-family:'Thiccboii',sans-serif !important;
+    color:#828282;
+    padding-top: 0.2rem;
+    font-size: 14px;
+
+    @media (max-width: 800px) {
+        visibility: hidden;
+    }
+}
+
+
 @media (max-width: 800px) {
     /* =Base */
     p {
@@ -282,7 +295,7 @@ strong {
     }
 
     .post-teaser__title {
-        font-size: 18px;
+        font-size: 20px;
         @include centered-block();
     }
 
