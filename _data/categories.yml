@@ -1,8 +1,14 @@
-- slug: design
-  name: Design
+- slug: tech
+  name: Tech
 
-- slug: tools
-  name: Tools
+- slug: aws
+  name: Aws
 
-- slug: productivity
-  name: Productivity
+- slug: life
+  name: Life
+
+- slug: books
+  name: Books
+
+- slug: travel
+  name: Travel
