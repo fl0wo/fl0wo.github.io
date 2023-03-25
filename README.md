@@ -16,7 +16,7 @@
 
 # Life Blogs
 - [X] Welcome
-- [ ] Migliori Frasi:
+- [ ] Fav phrases
 - [ ] Refuse to Belive circumstances
 - [ ] Some key hints on how to build a CV
 
