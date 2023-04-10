@@ -6,19 +6,8 @@ date:   2023-02-19 23:56:45
 categories: [tools]
 ---
 
-Just a sample post to show some of the *typography* elements supported from
-**daktilo** theme.
 
-___
-
-A blockquote:
-
-> We are Hitchhikers in the road of open source knowledge.
-
-## Header 2
-
-Duis lacinia commodo dui, vel aliquam metus hendrerit eu. Integer et scelerisque dui. Sed nec molestie quam. Donec sit amet nisl a massa commodo ultrices nec quis nunc. Aenean aliquet eu arcu adipiscing dignissim. Nunc dictum elit vitae dolor molestie aliquet.
-
+How to implement AppSync with AWS CDK 
 
 Example code:
 
@@ -56,14 +45,3 @@ A numbered list:
 4. Duis elementum odio eu euismod suscipit.
 5. Integer enim lorem, interdum sit amet consectetur non, bibendum eget neque.
 
-Definition list:
-
-Curabitur cursus magna eu sem cursus
-: ac ultrices urna pharetra.
-: Duis scelerisque ipsum eu luctus elementum.
-
-Pellentesque habitant morbi tristique senectus
-: Curabitur malesuada lacus ac gravida porttitor
-: Duis sodales feugiat lorem et mollis.
-
-Want to suggest something? Please [Send me a request](https://github.com/kronik3r/daktilo/issues/new).

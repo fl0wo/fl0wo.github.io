@@ -7,7 +7,11 @@ categories: [life]
 ---
 
 # Intro
+
 I'll list all the sentences that most represent me and the way I like thinking.
+I'll try to update this list as often as possible.
+If you read something here, it doesn't mean it's true for everybody.
+It just means I like forcing my self to think in such way.
 
 
 # 🥇 Number 1
@@ -58,3 +62,10 @@ If you think about nothing, you become nothing.
 > Mi contraddico facilmente ma lo faccio cosi in fretta che questo fa di me una persona coerente.
 
 I contradict myself easily, but I do it so quickly that it makes me a consistent person.
+
+
+# Number 8
+> We're given the ability to dream for a reason.
+
+The fact you dream something, you have a vision, a goal, a purpose, a reason to push forward, it only means one thing, you are able to obtain that goal.
+There's no way you can dream something you can't obtain.
