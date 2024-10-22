@@ -1,24 +1,21 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import {domainUrl, projectName} from "./consts";
+
 export default $config({
   app(input) {
     return {
-      name: "fl0wo",
+      name: `${projectName}`,
       removal: input?.stage === "production" ? "retain" : "remove",
       home: "aws",
     };
   },
   async run() {
-
-    // static website looking ./
-    const url = 'floriansabani.com'
-
     const website = new sst.aws.StaticSite("W", {
       domain: {
-        name: `${url}`,
-        redirects: [`www.${url}`]
+        name: `${domainUrl}`,
+        redirects: [`www.${domainUrl}`]
       }
     });
-
   },
 });
