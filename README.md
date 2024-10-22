@@ -1,44 +1,4 @@
-# Read Me
+# nicklashansen.github.io
+Repository for [my personal site](https://nicklashansen.github.io/), built with plain html.
 
-## Todo Wish List
-
-# Tech Blogs
-- [ ] Competitive Algorithms
-- [ ] AWS CDK - MixPanel Integration
-- [ ] AWS CDK - SES Email Monitoring 
-- [ ] SEO + Angular - Auto Generative SiteMap
-- [ ] AWS CDK - AppSync Auto Transformer
-- [ ] AWS CDK - SQS Traffic Congestion
-- [ ] How to conduct an Expand-Contract
-- [ ] Landing page and Core product - right way to host a website
-- [ ] AWS Timestream as Candlestick Database
-- [ ] AWS Timestream as Candlestick Database
-
-# Life Blogs
-- [X] Welcome
-- [X] Fav phrases
-- [ ] Some key hints on how to build a CV
-
-# Travel Blogs
-- [ ] Estonia Tallinn
-- [ ] Koln Germany
-- [ ] Sardinia
-
-# Startup Blogs
-- [ ] How I validate an MVP
-- [ ] 5 Analytics that changed my WebSite
-- [ ] One key secret that changes the way you show the product
-
-# Books
-- [ ] As A Man Tinketh
-- [ ] Lean Startup
-- [ ] J Curve
-- [ ] Drive
-- [ ] Buy Ology
-- [ ] Building a StoryBrand
-- [ ] Zero To One
-- [ ] Zero To Ipo
-- [ ] Hard Things About Hard Things
-- [ ] Deep Work
-- [ ] Founder Dilemma
-- [ ] Serverless Architecture AWS
+If you're reading this, you're probably interested in creating a personal site similar to what I have built. You are very welcome to clone this repository and built off of my work. Feel free to link back to my page if you decide to clone, but don't feel obligated. I'm also happy to receive PRs if you have ideas or suggestions on how to improve my site. If you want to learn more about GitHub Pages, [this](https://pages.github.com/) is a great place to start.

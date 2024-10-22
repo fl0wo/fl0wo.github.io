@@ -1,19 +1,157 @@
----
-layout: page
-title: Blog
-subtitle: I love mistakes, so when I do one, I write it down for others to learn something and to avoid falling into the same traps
-sitemap:
-  priority: 0.9
----
+<!DOCTYPE html>
+<head>
+    <title>Florian Sabani</title>
+    <meta name="author" content="Florian Sabani">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Florian Sabani">
+    <meta property="og:description" content="Software Engineer">
+    <meta property="og:url" content="https://fl0wo.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
 
-<ul class="list-posts">
-    {% for post in site.posts %}
-        <li class="post-teaser">
-            <a href="{{ post.url | prepend: site.baseurl }}">
-                <span class="post-teaser__title">{{ post.title }}</span>
-                <span class="post-teaser__date">{{ post.date | date: "%d %B %Y" }}</span>
-                <div class="post-teaser__subtitle">{{ post.subtitle }}</div>
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+    <meta property="og:image" content="https://fl0wo.github.io/files/me.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="apple-touch-icon" href="files/ucsd-logo.png">
+    <link rel="icon" type="image/png" href="files/ucsd-logo.png">
+    <link rel="manifest" href="files/site.webmanifest">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<div class="header noselect">
+    <div class="content row">
+        <div class="header-profile-picture"></div>
+        <div class="header-text">
+            <div class="header-name">
+                <h1>Florian Sabani</h1>
+            </div>
+            <div class="header-subtitle">
+                Software Engineer | Tech Entrepreneur | Cloud Specialist
+            </div>
+            <div class="header-links">
+                <a class="btn" href="#contact">Email</a> /
+                <a class="btn" href="https://www.linkedin.com/in/florian-sabani">LinkedIn</a> /
+                <a class="btn" href="https://github.com/fl0wo">GitHub</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding-bottom: 64px;">
+    <div>
+        <p>
+            I am a Software Engineer with experience in full-stack development and cloud technologies. I have worked at notable companies including Amazon and Generali Insurance, where I developed scalable solutions and improved existing systems.
+            <br/><br/>
+            Currently, I am the Co-Founder and CEO of <a href="https://dipsway.com">DipSway</a>, a crypto-software self-bootstrapped startup, where I lead product development and business strategy.
+            <br><br>
+            Additionally, I offer consulting services to businesses looking to improve their cloud infrastructure and software development processes.
+        </p>
+    </div>
+
+    <div>
+        <h2 class="noselect">Startup Experience</h2>
+        <div class="publication row clearfix">
+            <div class="row-media" style="background-image: url(files/dipsway-logo.png);"></div>
+
+            <div class="row-text">
+                <a href="https://dipsway.com" class="publication-title bold">Co-Founder & CEO at DipSway</a><br/>
+                Tallinn, ET | Oct 2022 - Present<br/>
+                • Led DipSway's growth from inception to over 1000 active crypto trading bots, achieving <a href="https://status.dipsway.com">99% uptime</a> and handling $20-50M in trading volume across
+                <a href="https://dipsway.com/#::deepdive/supported-exchanges">multiple exchanges</a>.<br/>
+                • Developed a high-performance infrastructure that ensures seamless integration with <a href="https://dipsway.com/#::deepdive/supported-exchanges">11+ exchanges</a>, overcoming significant technical and security challenges to optimize trading execution with
+                <a href="https://medium.com/aws-tip/i-moved-80-of-my-aws-servers-to-tokyo-see-why-8cda269aa3a3">geo-localized server optimization</a>.<br/>
+                • Increased conversion rates by 12% through data-driven A/B testing and continuous user experience improvements, enhancing user engagement and decision-making processes.<br/>
+                • Launched innovative AI-driven features, like the 'Autopilot' system, which empowers users by automating asset selection and optimizing bot configurations, making high-level trading accessible to retail users.<br/>
+                <img style="width: 100%" src="files/dipsway-page-1.png" alt="DipSway Bot Statspage">
+                • Fostered a competitive environment with the launch of a live bot leaderboard, driving a 10x increase in user engagement by creating transparency and motivation within the community.<br/>
+                • Navigated complex business challenges, including securing banking solutions and continuously refining product-market fit to adapt to the evolving crypto space.<br/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="noselect">Competitive Programming</h2>
+        <div class="publication row clearfix">
+            <div class="row-media" style="background-image: url(files/oii-logo.svg);"></div>
+
+            <div class="row-text">
+                <a href="https://training.olinfo.it/user/fl0rian" class="publication-title bold">Practitioner & Unofficial Teacher</a><br/>
+                Remote | Apr 2017 - Present<br/>
+                • Solved <a href="https://training.olinfo.it/user/fl0rian">310+ competitive programming problems</a> over 7 years of timespan<br/>
+                • Mentored 50+ students willing to participate in the Italian Olympiads of Informatics resulting in bronze and gold medals.<br/>
+                • Developed educational content for dynamic programming and graph algorithms
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <h2 class="noselect" style="margin-bottom: 1rem">Professional Experience</h2>
+        <div class="publication row clearfix">
+            <div class="row-media" style="background-image: url(files/amazon-logo.png);"></div>
+            <div class="row-text">
+                <a class="publication-title bold">Software Developer Engineer Intern - Amazon</a><br/>
+                Luxembourg | Feb 2022 - Oct 2022<br/>
+                • Collaborated with research team to design an algorithm that improved inventory optimization<br/>
+                • Developed serverless stack with AWS CDK, reducing execution costs by 180%<br/>
+                • Implemented warehouse & transportation network optimizations
+            </div>
+        </div>
+        <div class="publication row clearfix">
+            <div class="row-media" style="background-image: url(files/generali-logo.png);"></div>
+
+            <div class="row-text">
+                <a class="publication-title bold">Software Engineer - DevOps at Generali Insurance</a><br/>
+                Venice, IT | Jun 2021 - Feb 2022<br/>
+                • Built SpringBoot application for insurance proposals using design patterns<br/>
+                • Implemented CI/CD pipelines with Jenkins for documentation deployment<br/>
+                • Reduced code base by 20% through efficient design patterns
+            </div>
+        </div>
+        <div class="publication row clearfix">
+            <div class="row-media" style="background-image: url(files/venis-logo.jpg);"></div>
+
+            <div class="row-text">
+                <a class="publication-title bold">Software Developer at Venis SPA</a><br/>
+                Venice, IT | Sep 2019 - Jun 2021<br/>
+                • Developed PDF certificate generation system for citizens<br/>
+                • Created whistleblower software that was sold to 11+ public companies<br/>
+                • Increased customer base by 20% through product development
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <h2 class="noselect">Technical Skills</h2>
+        <div class="publication row clearfix">
+            <div class="row-text">
+                <p>
+                    <strong>Programming Languages:</strong> Java, C/C++, JavaScript, TypeScript, Dart, Python, Go, Ruby, Rust, Swift, PHP, Elixir<br/>
+                    <strong>Web Technologies:</strong> HTML/CSS, Angular, Astro, Next.js, Nuxt, Vue.js, React, Django, Flask, Rails, Sinatra, Svelte, Tailwind CSS<br/>
+                    <strong>Cloud & DevOps:</strong> AWS (EC2, Lambda, S3, CloudFormation, RDS, Route 53, EKS), Terraform, AWS CDK, Docker, Kubernetes, Jenkins, CircleCI, GitLab CI, ArgoCD, CloudFront, Vercel, SST, Netlify, Nginx, HAProxy, Consul, HashiCorp Vault, Packer, Ansible, Pulumi, Serverless Framework<br/>
+                    <strong>Databases:</strong> PostgreSQL, SQLite, MongoDB, DynamoDB, Redshift, MySQL, Aurora, Firebase, Redis, ElasticSearch, Cassandra<br/>
+                    <strong>Infrastructure as Code (IaC):</strong> AWS CloudFormation, Terraform, AWS CDK, Pulumi, Ansible, Chef, Puppet<br/>
+                    <strong>Monitoring & Logging:</strong> Grafana, Prometheus, ELK Stack, Datadog, CloudWatch, New Relic, Sentry, Loki, PagerDuty<br/>
+                    <strong>Mobile Development:</strong> Flutter, Android, iOS (Swift/Objective-C), React Native, Kotlin, Xamarin<br/>
+                    <strong>CI/CD & Automation:</strong> Jenkins, CircleCI, GitLab CI, Travis CI, GitHub Actions, Spinnaker, ArgoCD, Buildkite<br/>
+                    <strong>Security:</strong> OAuth, JWT, SSL/TLS, AWS IAM, IP Whitelisting, HashiCorp Vault, AWS Secrets Manager, Infisical, Snyk, OWASP ZAP, Penetration Testing<br/>
+                    <strong>Containerization & Orchestration:</strong> Docker, Kubernetes, Helm, AWS ECS, Docker Compose, Mesos, OpenShift<br/>
+                    <strong>Networking & Load Balancing:</strong> AWS VPC, CloudFront, Route 53, Nginx, HAProxy, API Gateway, Cloudflare, Traefik<br/>
+                    <strong>Other:</strong> Git, Linux, Vim, Unity, C4D, Segment, MixPanel, HotJar, Google Analytics, Microsoft Clarity, MailerLite<br/>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="noselect">
+        <a id="contact"></a>
+        <h2>Contact</h2>
+        Feel free to reach out regarding opportunities or collaborations.<br/>
+        Email: <span class="bold">sabaniforian@gmail.com</span><br/>
+    </div>
+</div>
+<div class="footer noselect">
+    <div class="footer-content">
+        &copy; 2024 Florian Sabani, from Italy 🇮🇹 with 🍕 and ❤️. All rights reserved.
+    </div>
+</div>

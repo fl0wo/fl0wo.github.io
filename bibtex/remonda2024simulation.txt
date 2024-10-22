@@ -1,0 +1,6 @@
+@inproceedings{remonda2024simulation,
+      title={A Simulation Benchmark for Autonomous Racing with Large-Scale Human Data}, 
+      author={Adrian Remonda and Nicklas Hansen and Ayoub Raji and Nicola Musiu and Marko Bertogna and Eduardo Veas and Xiaolong Wang},
+      booktitle={Annual Conference on Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track},
+	year={2024} 
+}
