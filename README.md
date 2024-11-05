@@ -10,7 +10,7 @@ export const projectName = 'yourprojectname';
 
 ### 2. Deploy using [SST](https://sst.dev)
 ```bash
-sst deploy
+npx sst deploy --stage production
 ```
 
 ## You don't have an AWS account?

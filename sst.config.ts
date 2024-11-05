@@ -11,7 +11,7 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.StaticSite("W", {
+    new sst.aws.StaticSite("MWB", {
       domain: {
         name: `${domainUrl}`,
         redirects: [`www.${domainUrl}`]
