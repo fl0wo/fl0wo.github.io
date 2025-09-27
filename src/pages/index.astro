@@ -37,14 +37,14 @@ const postsHaveSeries = sortedPosts.some((post) => post.data.series)
       </HomeBanner>
     )
   }
-  {
-    postsHaveSeries && (
-      <section>
-        <BlockHeader>Series</BlockHeader>
-        <SeriesSection posts={sortedPosts} />
-      </section>
-    )
-  }
+  <!--{-->
+  <!--  postsHaveSeries && (-->
+  <!--    <section>-->
+  <!--      <BlockHeader>Series</BlockHeader>-->
+  <!--      <SeriesSection posts={sortedPosts} />-->
+  <!--    </section>-->
+  <!--  )-->
+  <!--}-->
   {
     postsHaveTags && (
       <section>
@@ -56,7 +56,7 @@ const postsHaveSeries = sortedPosts.some((post) => post.data.series)
   {
     sortedPosts.length > 0 && (
       <section>
-        <BlockHeader>Latest Posts</BlockHeader>
+        <BlockHeader>Articles</BlockHeader>
         {sortedPosts
           .reverse()
           .slice(0, Math.floor(siteConfig.pageSize / 2))
