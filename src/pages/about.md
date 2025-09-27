@@ -9,40 +9,91 @@ Currently, I am the Co-Founder and CEO of [DipSway](https://dipsway.com), a cryp
 
 ## Startup Experience
 
-### CTO | Co-Founder at Bluvo
-San Francisco, California, USA | Feb 2025 - Present  
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/bluvo.png" alt="Bluvo" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">CTO | Co-Founder at Bluvo</h3>
+    <p style="margin: 0;">San Francisco, California, USA | Feb 2025 - Present</p>
+  </div>
+</div>
+
 • Implemented CI/CD pipelines for continuous integration and deployment  
 • Developed core systems using Rust for high-performance and memory safety  
 • Built one API for all crypto exchanges with seamless integration capabilities
 
-### Accelerator Program - Founders, Inc.
-San Francisco, California, USA | Feb 2025 - Apr 2025  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/finclogo.png" alt="Founders Inc" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Accelerator Program - Founders, Inc.</h3>
+    <p style="margin: 0;">San Francisco, California, USA | Feb 2025 - Apr 2025</p>
+  </div>
+</div>
+
 • Ship[it] accelerator program  
 • Shipped Bluvo, one API for all Crypto Exchanges
 
-### Startup Program - thirdweb
-San Francisco, California, USA | Apr 2025 - May 2025  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/thirdweblogo.png" alt="thirdweb" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Startup Program - thirdweb</h3>
+    <p style="margin: 0;">San Francisco, California, USA | Apr 2025 - May 2025</p>
+  </div>
+</div>
+
 • Experience with 30 of the most exciting web3 startups demo their apps  
 • Onchain AI Agents  
 • Blockchain games  
 • Consumer crypto apps
 
-### Co-Founder & CEO at DipSway
-Tallinn, ET | Oct 2022 - Present  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/dipsway-logo.png" alt="DipSway" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Co-Founder & CEO at DipSway</h3>
+    <p style="margin: 0;">Tallinn, ET | Oct 2022 - Present</p>
+  </div>
+</div>
+
 • Led DipSway's growth from inception to over 1000 active crypto trading bots, achieving [99% uptime](https://status.dipsway.com) and handling $20-50M in trading volume across [multiple exchanges](https://dipsway.com/#::deepdive/supported-exchanges)  
 • Developed a high-performance infrastructure that ensures seamless integration with [11+ exchanges](https://dipsway.com/#::deepdive/supported-exchanges)  
 • Increased conversion rates by 12% through data-driven A/B testing and continuous user experience improvements  
 • Launched innovative AI-driven features, like the 'Autopilot' system, which empowers users by automating asset selection
 
-### Co-Founder at EmailCatcher
-Tallinn, ET | Nov 2024 - Present  
+![DipSway Bot Statspage](/images/dipsway-page-1.png)
+
+• Fostered a competitive environment with the launch of a live bot leaderboard  
+• Navigated complex business challenges, including securing banking solutions
+
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/emailcatcher-logo.png" alt="EmailCatcher" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Co-Founder at EmailCatcher</h3>
+    <p style="margin: 0;">Tallinn, ET | Nov 2024 - Present</p>
+  </div>
+</div>
+
 • Developed in 48h a SaaS product that allows users to catch the emails of their website visitors  
 • Implemented a real-time dashboard that shows the number of emails caught and the conversion rate  
 • Integrated with MailerLite and MailChimp to send automated emails  
 • Reached 100+ users in the first month of operation
 
-### Co-Founder at BlogFAST
-Tallinn, ET | May 2024 - Aug 2024  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/blogfast-logo.png" alt="BlogFAST" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Co-Founder at BlogFAST</h3>
+    <p style="margin: 0;">Tallinn, ET | May 2024 - Aug 2024</p>
+  </div>
+</div>
+
 • Developed a LLM based blog generator that creates SEO optimized articles  
 • Built scraping tool to extract data from Google and Bing search results  
 • Automated website deployment on sub-domains with AWS Route 53 and CloudFront  
@@ -50,23 +101,59 @@ Tallinn, ET | May 2024 - Aug 2024
 
 ## Professional Experience
 
-### Software Developer Engineer Intern - Amazon
-Luxembourg | Feb 2022 - Oct 2022  
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/amazon-logo.png" alt="Amazon" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Software Developer Engineer Intern - Amazon</h3>
+    <p style="margin: 0;">Luxembourg | Feb 2022 - Oct 2022</p>
+  </div>
+</div>
+
 • Collaborated with research team to design an algorithm that improved inventory optimization  
 • Developed serverless stack with AWS CDK, reducing execution costs by 180%  
 • Implemented warehouse & transportation network optimizations
 
-### Software Engineer - DevOps at Generali Insurance
-Venice, IT | Jun 2021 - Feb 2022  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/generali-logo.png" alt="Generali Insurance" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Software Engineer - DevOps at Generali Insurance</h3>
+    <p style="margin: 0;">Venice, IT | Jun 2021 - Feb 2022</p>
+  </div>
+</div>
+
 • Built SpringBoot application for insurance proposals using design patterns  
 • Implemented CI/CD pipelines with Jenkins for documentation deployment  
 • Reduced code base by 20% through efficient design patterns
 
-### Software Developer at Venis SPA
-Venice, IT | Sep 2019 - Jun 2021  
+---
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/venis-logo.jpg" alt="Venis SPA" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Software Developer at Venis SPA</h3>
+    <p style="margin: 0;">Venice, IT | Sep 2019 - Jun 2021</p>
+  </div>
+</div>
+
 • Developed PDF certificate generation system for citizens  
 • Created whistleblower software that was sold to 11+ public companies  
 • Increased customer base by 20% through product development
+
+## Competitive Programming
+
+<div style="display: flex; align-items: center; margin-bottom: 2rem;">
+  <img src="/images/oii-logo.svg" alt="Italian Olympiads" style="width: 80px; height: 80px; margin-right: 1rem; object-fit: contain;">
+  <div>
+    <h3 style="margin: 0;">Practitioner & Unofficial Teacher</h3>
+    <p style="margin: 0;">Remote | Apr 2017 - Present</p>
+  </div>
+</div>
+
+• Solved [310+ competitive programming problems](https://training.olinfo.it/user/fl0rian) over 7 years of timespan  
+• Mentored 50+ students willing to participate in the Italian Olympiads of Informatics resulting in bronze and gold medals  
+• Developed educational content for dynamic programming and graph algorithms
 
 ## Technical Skills
 
@@ -79,14 +166,6 @@ Venice, IT | Sep 2019 - Jun 2021
 **Databases:** PostgreSQL, SQLite, MongoDB, DynamoDB, Redshift, MySQL, Aurora, Firebase, Redis, ElasticSearch, Cassandra
 
 **Mobile Development:** Flutter, Android, iOS (Swift/Objective-C), React Native, Kotlin, Xamarin
-
-## Competitive Programming
-
-### Practitioner & Unofficial Teacher
-Remote | Apr 2017 - Present  
-• Solved [310+ competitive programming problems](https://training.olinfo.it/user/fl0rian) over 7 years of timespan  
-• Mentored 50+ students willing to participate in the Italian Olympiads of Informatics resulting in bronze and gold medals  
-• Developed educational content for dynamic programming and graph algorithms
 
 ## Contact
 
