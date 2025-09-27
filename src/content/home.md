@@ -5,7 +5,7 @@ avatarImage:
 githubCalendar: 'fl0wo'
 ---
 
-Founder at [Bluvo](https://bluvo.dev), APIs for direct deposits from CEX <-> DeFi and back.
+Founder at [Bluvo](https://bluvo.dev), APIs for direct deposits from CEX <-> DeFi.
 
 I bought BTC at \$500 and sold it at \$11k when I was 19yo, then bought again and never sold again T.T
 
