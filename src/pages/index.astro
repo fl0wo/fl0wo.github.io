@@ -2,7 +2,7 @@
 import Layout from '~/layouts/Layout.astro'
 import { getSortedPosts } from '~/utils'
 import { getCollection, render } from 'astro:content'
-import PostPreview from '~/components/PostPreview.astro'
+import PostPreviewCompact from '~/components/PostPreviewCompact.astro'
 import Pagination from '~/components/Pagination.astro'
 import BlockHeader from '~/components/BlockHeader.astro'
 import HomeBanner from '~/components/HomeBanner.astro'
@@ -59,9 +59,9 @@ const postsHaveSeries = sortedPosts.some((post) => post.data.series)
         <BlockHeader>Articles</BlockHeader>
         {sortedPosts
           .reverse()
-          .slice(0, Math.floor(siteConfig.pageSize / 2))
+          .slice(0, 10)
           .map((post) => (
-            <PostPreview post={post} />
+            <PostPreviewCompact post={post} />
           ))}
         <Pagination nextLink="/posts" nextText="Archive" />
       </section>

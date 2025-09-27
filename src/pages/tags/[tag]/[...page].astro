@@ -4,7 +4,7 @@ import Layout from '~/layouts/Layout.astro'
 import { TagsGroup } from '~/utils'
 import Pagination from '~/components/Pagination.astro'
 import siteConfig from '~/site.config'
-import PostPreview from '~/components/PostPreview.astro'
+import PostPreviewCompact from '~/components/PostPreviewCompact.astro'
 import PageHeader from '~/components/PageHeader.astro'
 
 // Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
@@ -29,7 +29,7 @@ const pageTitle =
 <Layout title={pageTitle} description={`All posts tagged with ${tagTitle}`}>
   <div class="mt-2 sm:mt-0">
     <PageHeader titlePieces={['tags', tagTitle]} />
-    {page.data.map((post) => <PostPreview post={post} />)}
+    {page.data.map((post) => <PostPreviewCompact post={post} />)}
     <Pagination
       prevLink={page.url.prev ? encodeURI(page.url.prev) : undefined}
       prevText="Newer Posts"
