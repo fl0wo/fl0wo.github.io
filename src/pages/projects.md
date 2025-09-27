@@ -3,6 +3,18 @@ layout: '~/layouts/MarkdownLayout.astro'
 title: Projects I'm Proud Of
 ---
 
+### Throw The Alien Go
+[View on GitHub](https://github.com/fl0wo/trajectory-go)  
+**Technologies:** 2D Game Development, Math, Shaders, Line Interpolation
+
+![Throw The Alien Go Gameplay](/images/trajectory.gif)
+
+• Developed a 2D physics-based puzzle game with complex mathematical calculations  
+• Implemented custom shaders for visual effects and line interpolation for trajectory prediction  
+• Created gravity mechanics with planets and black holes that affect the alien's trajectory  
+• Designed challenging levels where players must throw an alien to reach white holes while avoiding obstacles  
+• Built physics simulation system that accounts for gravitational attraction and collision detection
+
 ### Airport Logistic
 [View on GitHub](https://github.com/fl0wo/AirportLogistic)  
 **Technologies:** C++, Dijkstra's Algorithm, Math, Geometric, SFML
