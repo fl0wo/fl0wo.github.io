@@ -1,17 +1,16 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import {domainUrl, projectName} from "./consts";
+
 export default $config({
   app(input) {
     return {
-      name: "fl0wosite",
+      name: `${projectName}`,
       removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
       home: "aws",
     };
   },
   async run() {
-    const domainUrl = 'floriansabani.com';
-
     new sst.aws.Astro("MWBA", {
       domain: {
         name: `${domainUrl}`,
