@@ -2,13 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 /* deno-fmt-ignore-file */
-import "sst"
-export {}
+
 declare module "sst" {
   export interface Resource {
-    "MWB": {
-      "type": "sst.aws.StaticSite"
+    "MWBA": {
+      "type": "sst.aws.Astro"
       "url": string
     }
   }
 }
+/// <reference path="sst-env.d.ts" />
+
+import "sst"
+export {}
