@@ -1,9 +1,7 @@
 ---
 layout: '~/layouts/MarkdownLayout.astro'
-title: Personal Projects
+title: Projects I'm Proud Of
 ---
-
-## Projects I'm Proud Of
 
 ### Airport Logistic
 [View on GitHub](https://github.com/fl0wo/AirportLogistic)  
