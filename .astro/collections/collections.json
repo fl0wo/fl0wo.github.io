@@ -16,8 +16,8 @@
   "entries": {
     "file:///users/flo/webstormprojects/fl0wo/src/content/addendum.md": "addendum",
     "file:///users/flo/webstormprojects/fl0wo/src/content/home.md": "home",
-    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/javascript-prototypal-inheritance.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/advanced-typescript-conditional-types.md": "posts",
+    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/javascript-prototypal-inheritance.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/mastering-async-await-in-javascript.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/pythons-generators-and-yield.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/error-handling-in-go.md": "posts",
@@ -26,11 +26,11 @@
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/pythons-context-managers-and-the-with-statement.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/python-decorators-demystified.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/concurrency-in-go.md": "posts",
+    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/typescript-generics-explained.md": "posts",
+    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/typescripts-keyof-and-mapped-types.md": "posts",
+    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/pythons-list-comprehensions.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/typescript-utility-types.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/understanding-closures-in-javascript.md": "posts",
-    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/typescript-generics-explained.md": "posts",
-    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/pythons-list-comprehensions.md": "posts",
-    "file:///users/flo/webstormprojects/fl0wo/src/content/posts/typescripts-keyof-and-mapped-types.md": "posts",
     "file:///users/flo/webstormprojects/fl0wo/src/content/posts/showing-off-blog-features/index.md": "posts"
   }
 }
