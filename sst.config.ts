@@ -1,3 +1,4 @@
+// @ts-nocheck
 /// <reference path="./.sst/platform/config.d.ts" />
 
 import {domainUrl, projectName} from "./consts";
@@ -11,7 +12,7 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.StaticSite("MWB", {
+    new sst.aws.Astro("MWB", {
       domain: {
         name: `${domainUrl}`,
         redirects: [`www.${domainUrl}`]
