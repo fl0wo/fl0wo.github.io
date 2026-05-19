@@ -1,0 +1,20 @@
+{
+  "name": "multiterm-astro",
+  "compatibility_date": "2026-05-19",
+  "assets": {
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "floriansabani.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.floriansabani.com",
+      "custom_domain": true
+    }
+  ]
+}

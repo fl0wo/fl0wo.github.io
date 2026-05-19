@@ -9,10 +9,11 @@
     "dev": "astro dev",
     "format": "prettier --write .",
     "postbuild": "pagefind --site dist",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "deploy": "npx wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.6",
+"@astrojs/markdown-remark": "^6.3.6",
     "@astrojs/mdx": "^4.3.4",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",
@@ -28,7 +29,6 @@
     "@types/react-dom": "^19.1.9",
     "astro": "^5.13.5",
     "astro-expressive-code": "^0.41.3",
-    "astro-sst": "3.1.4",
     "color": "^5.0.0",
     "date-fns": "^4.1.0",
     "emoji-regex": "^10.5.0",
@@ -53,11 +53,11 @@
     "satori": "^0.18.2",
     "satori-html": "^0.3.2",
     "sharp": "^0.34.4",
-    "sst": "3.17.14",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "wrangler": "^4.93.0"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
