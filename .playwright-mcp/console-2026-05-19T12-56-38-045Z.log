@@ -1,0 +1,30 @@
+[     297ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.linkedin.com/in/florian-sabani/:0
+[   10324ms] [ERROR] Failed to load resource: the server responded with a status of 999 () @ https://www.linkedin.com/in/florian-sabani:0
+[   10773ms] [LOG] Error @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   10809ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "username"): (More info: https://goo.gl/9p2vKq) %o @ https://www.linkedin.com/authwall?trk=bf&trkInfo=AQGiMmGrLnmEKQAAAZ5AT26ADdH3gbB7LSdJe8KvDBFxBl03zGTW9NhBtuOB7U1LbVvVU6dLBq65BR5oNhQLLJgrN7ldOJ_nJUDXll-S4ea1YfEYHYrYVacdP6vFUZeKOyjFWro=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fflorian-sabani:0
+[   11253ms] [WARNING] Element with id: dust-var-locale not found @ https://static.licdn.com/aero-v1/sc/h/3kgy5ay8f0k9viv1cd9y344x2:1
+[   11314ms] [WARNING] [GSI_LOGGER]: Your client application may not display the Google One Tap in its default position. When FedCM becomes mandatory, One Tap only displays in the default position. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#layout @ https://static.licdn.com/aero-v1/sc/h/29rdkxlvag0d3cpj96fiilbju:168
+[   11314ms] [WARNING] [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment @ https://static.licdn.com/aero-v1/sc/h/29rdkxlvag0d3cpj96fiilbju:168
+[   11314ms] [WARNING] [GSI_LOGGER]: Currently, you disable FedCM on Google One Tap. FedCM for One Tap will become mandatory starting Oct 2024, and you won’t be able to disable it. Refer to the migration guide to update your code accordingly to ensure users will not be blocked from logging in. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration @ https://static.licdn.com/aero-v1/sc/h/29rdkxlvag0d3cpj96fiilbju:168
+[   11316ms] [WARNING] [GSI_LOGGER]: Currently, you disable FedCM on Google One Tap. FedCM for One Tap will become mandatory starting Oct 2024, and you won’t be able to disable it. Refer to the migration guide to update your code accordingly to ensure users will not be blocked from logging in. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration @ https://static.licdn.com/aero-v1/sc/h/29rdkxlvag0d3cpj96fiilbju:168
+[   11321ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11376ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/3lm6jmtzdyw0hlonhje0bbsjf:0
+[   11381ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/3lm6jmtzdyw0hlonhje0bbsjf:0
+[   11388ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11515ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/3lm6jmtzdyw0hlonhje0bbsjf:0
+[   11518ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/3lm6jmtzdyw0hlonhje0bbsjf:0
+[   11523ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/3lm6jmtzdyw0hlonhje0bbsjf:0
+[   11539ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/80ndnja80f2uvg4l8sj2su82m:0
+[   11569ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11571ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11575ms] [WARNING] WARNING: Too many active WebGL contexts. Oldest context will be lost. @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11626ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11629ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ https://static.licdn.com/aero-v1/sc/h/95dn6qmfiqsklhxazp0jn20zg:1
+[   11798ms] [LOG] %c EvalError
+    at oM (https://client.protechts.net/PXdOjV695v/main.min.js:2:68828)
+    at qO (https://client.protechts.net/PXdOjV695v/main.min.js:2:74656)
+    at Ke (https://client.protechts.net/PXdOjV695v/main.min.js:2:227894)
+    at Kc (https://client.protechts.net/PXdOjV695v/main.min.js:2:227520)
+    at https://client.protechts.net/PXdOjV695v/main.min.js:2:229242
+    at https://client.protechts.net/PXdOjV695v/main.min.js:2:229248
+    at https://client.protechts.net/PXdOjV695v/main.min.js:2:229713 @ https://client.protechts.net/PXdOjV695v/main.min.js:1

@@ -1,0 +1,75 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - img [ref=e4]
+    - img [ref=e167]
+    - img [ref=e261]
+    - img [ref=e290]
+  - banner [ref=e310]:
+    - generic [ref=e311]:
+      - generic [ref=e312]:
+        - generic [ref=e313]: 選擇語言
+        - combobox "選擇語言" [ref=e314]:
+          - option "Bahasa Indonesia (Bahasa Indonesia)"
+          - option "Bahasa Malaysia (Malay)"
+          - option "Čeština (Czech)"
+          - option "Dansk (Danish)"
+          - option "Deutsch (German)"
+          - option "English (English)" [selected]
+          - option "Español (Spanish)"
+          - option "繁體中文 (Chinese (Traditional))"
+          - option "Français (French)"
+          - option "한국어 (Korean)"
+          - option "Italiano (Italian)"
+          - option "简体中文 (Chinese (Simplified))"
+          - option "Nederlands (Dutch)"
+          - option "日本語 (Japanese)"
+          - option "Norsk (Norwegian)"
+          - option "Polski (Polish)"
+          - option "Português (Portuguese)"
+          - option "Română (Romanian)"
+          - option "Русский (Russian)"
+          - option "Svenska (Swedish)"
+          - option "Tagalog (Tagalog)"
+          - option "ภาษาไทย (Thai)"
+          - option "Türkçe (Turkish)"
+          - option "العربية (Arabic)"
+        - img [ref=e316]
+      - link "LinkedIn" [ref=e320] [cursor=pointer]:
+        - /url: /
+        - img [ref=e321]
+  - main [ref=e335]:
+    - generic [ref=e338]:
+      - heading "Page not found" [level=1] [ref=e339]
+      - heading "Uh oh, we can’t seem to find the page you’re looking for. Try going back to the previous page or see our Help Center for more information" [level=2] [ref=e340]:
+        - text: Uh oh, we can’t seem to find the page you’re looking for. Try going back to the previous page or see our
+        - link "Help Center" [ref=e341] [cursor=pointer]:
+          - /url: /help/linkedin?trk=404_page
+        - text: for more information
+      - link "Go to your feed" [ref=e343] [cursor=pointer]:
+        - /url: /feed/?trk=404_page
+  - contentinfo [ref=e344]:
+    - generic [ref=e345]:
+      - generic [ref=e346]:
+        - link "LinkedIn" [ref=e347] [cursor=pointer]:
+          - /url: /
+          - img [ref=e348]
+        - text: © 2022
+      - list [ref=e363]:
+        - listitem [ref=e364]:
+          - link "User Agreement" [ref=e365] [cursor=pointer]:
+            - /url: /legal/user-agreement?trk=%7Berror-page%7D-user-agreement
+        - listitem [ref=e366]:
+          - link "Privacy Policy" [ref=e367] [cursor=pointer]:
+            - /url: /legal/privacy-policy?trk=%7Berror-page%7D-privacy-policy
+        - listitem [ref=e368]:
+          - link "Community Guidelines" [ref=e369] [cursor=pointer]:
+            - /url: /help/linkedin/answer/34593?trk=%7Berror-page%7D-community-guidelines
+        - listitem [ref=e370]:
+          - link "Cookie Policy" [ref=e371] [cursor=pointer]:
+            - /url: /legal/cookie-policy?trk=%7Berror-page%7D-cookie-policy
+        - listitem [ref=e372]:
+          - link "Copyright Policy" [ref=e373] [cursor=pointer]:
+            - /url: /legal/copyright-policy?trk=%7Berror-page%7D-copyright-policy
+        - listitem [ref=e374]:
+          - link "Guest Controls" [ref=e375] [cursor=pointer]:
+            - /url: /psettings/guest-controls?trk=%7Berror-page%7D-guest-controls
