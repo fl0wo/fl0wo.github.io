@@ -52,3 +52,6 @@
   - `listen EPERM` from `tsx` pipe creation in `/var/.../tsx-...pipe`.
   - Re-run with escalation succeeded.
 - No functional issues remain; no additional follow-up required.
+
+
+Cleanup note: This report file was untracked per review instruction while retaining it locally for review.
