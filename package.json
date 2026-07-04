@@ -5,15 +5,19 @@
   "version": "1.0.0",
   "scripts": {
     "astro": "astro",
-    "build": "astro build",
+    "build": "pnpm run i18n:validate && astro build",
     "dev": "astro dev",
     "format": "prettier --write .",
+    "i18n:prompts": "tsx scripts/i18n/prompts.ts",
+    "i18n:test": "vitest run test/i18n",
+    "i18n:validate": "tsx scripts/i18n/validate.ts",
     "postbuild": "pagefind --site dist",
     "preview": "astro preview",
+    "test": "vitest run",
     "deploy": "npx wrangler deploy"
   },
   "dependencies": {
-"@astrojs/markdown-remark": "^6.3.6",
+    "@astrojs/markdown-remark": "^6.3.6",
     "@astrojs/mdx": "^4.3.4",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",
@@ -62,9 +66,12 @@
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.16.0",
+    "gray-matter": "^4.0.3",
     "pagefind": "^1.4.0",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
-    "sass-embedded": "^1.92.1"
+    "sass-embedded": "^1.92.1",
+    "tsx": "^4.23.0",
+    "vitest": "^4.1.9"
   }
 }
