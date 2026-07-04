@@ -1,6 +1,6 @@
 ---
 avatarImage:
-  src: './flopp2.jpeg'
+  src: '../flopp2.jpeg'
   alt: 'Florian Sabani'
 githubCalendar: 'fl0wo'
 ---
