@@ -375,6 +375,11 @@ function frontmatterKeys(data: Record<string, unknown>): string[] {
   return Object.keys(data).sort()
 }
 
+function isLocalRelativePath(value: string): boolean {
+  const path = value.trim()
+  return path.startsWith('./') || path.startsWith('../')
+}
+
 function frontmatterAssetRefs(data: Record<string, unknown>): Array<{ field: string; value: string }> {
   const refFields = ['coverImage', 'avatarImage']
 
@@ -386,8 +391,8 @@ function frontmatterAssetRefs(data: Record<string, unknown>): Array<{ field: str
 
     const src = (block as { src?: unknown }).src
 
-    if (typeof src === 'string' && src.trim().startsWith('./')) {
-      return [{ field, value: src }]
+    if (typeof src === 'string' && isLocalRelativePath(src)) {
+      return [{ field, value: src.trim() }]
     }
 
     return []
@@ -412,7 +417,7 @@ function validateFrontmatterAssets(
 }
 
 function validateLocalLinks(content: string, sourcePath: string): string[] {
-  return [...content.matchAll(/\]\((\.\/[^)\s]+)(?:\s+['"][^'"]+['"])?\)/g)]
+  return [...content.matchAll(/\]\((\.{1,2}\/[^)\s]+)(?:\s+['"][^'"]+['"])?\)/g)]
     .map((match) => match[1])
     .map((localRef) => {
       const assetPath = join(dirname(sourcePath), localRef)

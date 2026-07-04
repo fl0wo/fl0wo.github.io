@@ -563,6 +563,20 @@ describe('i18n filesystem helpers', () => {
     }
   })
 
+  test('reports missing rewritten legacy frontmatter assets', () => {
+    const root = legacyTranslatedFixtureRoot()
+
+    try {
+      rmSync(join(root, 'src/content/flopp2.jpeg'), { force: true })
+
+      expect(validateTranslations(root)).toContain(
+        'Missing avatarImage.src referenced by src/content/home/index.it.md: ../flopp2.jpeg',
+      )
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
   test('reports malformed translated frontmatter without throwing', () => {
     const root = malformedTranslatedFrontmatterFixtureRoot()
 
