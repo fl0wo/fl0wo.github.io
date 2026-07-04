@@ -44,11 +44,50 @@ type ParsedMarkdown = {
   frontmatterError?: string
 }
 
+function extractFrontmatterSection(content: string): string | null {
+  const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)
+
+  if (!frontmatterMatch) {
+    if (content.startsWith('---')) {
+      return ''
+    }
+
+    return null
+  }
+
+  return frontmatterMatch[1]
+}
+
+function hasFrontmatterContent(frontmatterText: string): boolean {
+  return frontmatterText
+    .split(/\r?\n/)
+    .some((line) => {
+      const trimmed = line.trim()
+      return trimmed !== '' && !trimmed.startsWith('#')
+    })
+}
+
 function parseMarkdown(sourcePath: string): ParsedMarkdown {
   const content = readFileSync(sourcePath, 'utf8')
+  const frontmatterSection = extractFrontmatterSection(content)
 
   try {
     const { data } = matter(content)
+    if (frontmatterSection === '') {
+      return {
+        content,
+        data: {},
+        frontmatterError: 'Unable to parse frontmatter: missing closing --- delimiter',
+      }
+    }
+
+    if (Object.keys(data).length === 0 && frontmatterSection !== null && hasFrontmatterContent(frontmatterSection)) {
+      return {
+        content,
+        data: {},
+        frontmatterError: 'Unable to parse frontmatter block',
+      }
+    }
 
     return { content, data: data as Record<string, unknown> }
   } catch (error) {
