@@ -46,3 +46,15 @@
 - Verification:
   - `pnpm run i18n:test` → `Test Files 1 passed (1), Tests 5 passed (5)`
   - `pnpm build` → success (Astro build completed, sitemap/pagefind generated)
+
+## Task 1 final script cleanup (re-review)
+- Removed Task 1-facing dangling script targets to avoid missing-file failures:
+  - Deleted `i18n:prompts` from `scripts` (was `tsx scripts/i18n/prompts.ts`)
+  - Deleted `i18n:validate` from `scripts` (was `tsx scripts/i18n/validate.ts`)
+- Kept these Task 1 scripts intact:
+  - `build: astro build`
+  - `test: vitest run`
+  - `i18n:test: vitest run test/i18n`
+- Verification:
+  - `pnpm run i18n:test` → pass
+  - `pnpm build` → pass
