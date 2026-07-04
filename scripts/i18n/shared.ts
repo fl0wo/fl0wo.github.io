@@ -99,6 +99,54 @@ function parseMarkdown(sourcePath: string): ParsedMarkdown {
   }
 }
 
+function rewriteLegacyFrontmatterAssetRefs(data: Record<string, unknown>): Record<string, unknown> {
+  const keys = ['coverImage', 'avatarImage']
+  const rewritten = { ...data }
+
+  for (const key of keys) {
+    const value = rewritten[key]
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+      continue
+    }
+
+    const block = { ...(value as Record<string, unknown>) }
+    const src = block.src
+
+    if (typeof src === 'string' && src.startsWith('./')) {
+      block.src = `../${src.slice(2)}`
+    }
+
+    rewritten[key] = block
+  }
+
+  return rewritten
+}
+
+function shouldRewriteLegacySourceForPrompt(source: SourceFile): boolean {
+  return (
+    (source.kind === 'home' && source.relativePath === 'home.md') ||
+    (source.kind === 'addendum' && source.relativePath === 'addendum.md')
+  )
+}
+
+function sourceContentForPrompt(source: SourceFile): string {
+  if (!shouldRewriteLegacySourceForPrompt(source)) {
+    return source.content
+  }
+
+  try {
+    const parsed = matter(source.content)
+    if (!parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) {
+      return source.content
+    }
+
+    const rewrittenData = rewriteLegacyFrontmatterAssetRefs(parsed.data as Record<string, unknown>)
+    return matter.stringify(parsed.content, rewrittenData).trim()
+  } catch {
+    return source.content
+  }
+}
+
 function parseContentSource(relativePath: string, sourcePath: string): SourceFile | undefined {
   const normalizedPath = relativePath.split(sep).join('/')
   const fileName = basename(normalizedPath)
@@ -292,6 +340,10 @@ export function promptPathFor(source: SourceFile, lang: TranslationLang, rootDir
 export function buildTranslationPrompt(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
   const meta = languageMeta[lang]
   const relativeDestination = relative(rootDir, destinationFor(source, lang, rootDir))
+  const sourceContent = sourceContentForPrompt(source)
+  const preservePathInstruction = shouldRewriteLegacySourceForPrompt(source)
+    ? '- Preserve image and local file paths as shown in the Source file block.'
+    : '- Preserve image paths exactly, including relative paths such as ./cover.jpg.'
 
   return [
     `Target language: ${meta.label} (${meta.nativeLabel})`,
@@ -308,12 +360,12 @@ export function buildTranslationPrompt(source: SourceFile, lang: TranslationLang
     '- Preserve Markdown and MDX syntax.',
     '- Preserve code fences, inline code, raw HTML tags, directives, image URLs, local file paths, external URLs, and technical identifiers.',
     '- Preserve the slug and do not rename files.',
-    '- Preserve image paths exactly, including relative paths such as ./cover.jpg.',
+    preservePathInstruction,
     '- Keep dates, booleans, arrays, and nested frontmatter objects valid.',
     '',
     'Source file:',
     '```markdown',
-    source.content.trimEnd(),
+    sourceContent,
     '```',
     '',
   ].join('\n')

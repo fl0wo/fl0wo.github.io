@@ -173,6 +173,77 @@ function futureLocalizedContentFixtureRoot(): string {
   return root
 }
 
+function legacyTranslatedFixtureRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
+  mkdirSync(join(root, 'src/content'), { recursive: true })
+  mkdirSync(join(root, 'src/content/home'), { recursive: true })
+  mkdirSync(join(root, 'src/content/addendum'), { recursive: true })
+
+  writeFileSync(
+    join(root, 'src/content/home.md'),
+    [
+      '---',
+      'title: Home',
+      'avatarImage:',
+      "  src: './flopp2.jpeg'",
+      "  alt: 'Florian'",
+      '---',
+      '',
+      'Welcome home.',
+    ].join('\n'),
+  )
+  writeFileSync(join(root, 'src/content/flopp2.jpeg'), 'fake-image')
+
+  writeFileSync(
+    join(root, 'src/content/addendum.md'),
+    [
+      '---',
+      'title: Addendum',
+      'avatarImage:',
+      "  src: './avatar.jpg'",
+      "  alt: 'Avatar'",
+      '---',
+      '',
+      'Thanks for reading.',
+    ].join('\n'),
+  )
+  writeFileSync(join(root, 'src/content/avatar.jpg'), 'fake-image')
+
+  for (const lang of ['it', 'ar', 'zh']) {
+    writeFileSync(
+      join(root, `src/content/home/index.${lang}.md`),
+      [
+        '---',
+        'title: Home',
+        'avatarImage:',
+        "  src: '../flopp2.jpeg'",
+        "  alt: 'Florian'",
+        '---',
+        '',
+        `Benvenuto ${lang}.`,
+      ].join('\n'),
+    )
+  }
+
+  for (const lang of ['it', 'ar', 'zh']) {
+    writeFileSync(
+      join(root, `src/content/addendum/index.${lang}.md`),
+      [
+        '---',
+        'title: Addendum',
+        'avatarImage:',
+        "  src: '../avatar.jpg'",
+        "  alt: 'Avatar'",
+        '---',
+        '',
+        `Grazie ${lang}.`,
+      ].join('\n'),
+    )
+  }
+
+  return root
+}
+
 function validationIssueFixtureRoot(): string {
   const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
   mkdirSync(join(root, 'src/content/posts/hello'), { recursive: true })
@@ -380,6 +451,43 @@ describe('i18n filesystem helpers', () => {
     }
   })
 
+  test('rewrites legacy frontmatter asset paths in legacy prompt fixtures', () => {
+    const root = legacySourceFixtureRoot()
+
+    try {
+      const sources = discoverEnglishSources(root)
+      const byKind = new Map(sources.map((source) => [`${source.kind}:${source.slug}`, source]))
+
+      const homePrompt = buildTranslationPrompt(byKind.get('home:home')!, 'it', root)
+      const addendumPrompt = buildTranslationPrompt(byKind.get('addendum:addendum')!, 'it', root)
+
+      expect(homePrompt).toContain('../flopp2.jpeg')
+      expect(homePrompt).not.toContain("src: './flopp2.jpeg'")
+      expect(addendumPrompt).toContain('../avatar.jpg')
+      expect(addendumPrompt).not.toContain("src: './avatar.jpg'")
+      expect(homePrompt).toContain('Target language: Italian')
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('keeps future localized source paths unchanged for prompt generation', () => {
+    const root = futureLocalizedContentFixtureRoot()
+
+    try {
+      const sources = discoverEnglishSources(root)
+      const byKind = new Map(sources.map((source) => [`${source.kind}:${source.slug}`, source]))
+
+      const homePrompt = buildTranslationPrompt(byKind.get('home:home')!, 'zh', root)
+      const addendumPrompt = buildTranslationPrompt(byKind.get('addendum:addendum')!, 'zh', root)
+
+      expect(homePrompt).toContain("src: './flopp2.jpeg'")
+      expect(addendumPrompt).toContain("src: './avatar.jpg'")
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
   test('discovers future localized page/home/addendum content sources', () => {
     const root = futureLocalizedContentFixtureRoot()
 
@@ -440,6 +548,16 @@ describe('i18n filesystem helpers', () => {
       )
       expect(errors).toContain('Unsupported page slug at src/pages/faq.md: faq')
       expect(errors).toContain('Missing translation: src/content/pages/faq/index.it.md')
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('validates legacy home/addendum translated assets when rewritten correctly', () => {
+    const root = legacyTranslatedFixtureRoot()
+
+    try {
+      expect(validateTranslations(root)).toEqual([])
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
