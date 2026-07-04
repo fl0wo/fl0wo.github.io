@@ -123,6 +123,56 @@ function futureSourceFixtureRoot(): string {
   return root
 }
 
+function futureLocalizedContentFixtureRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
+  mkdirSync(join(root, 'src/content/home'), { recursive: true })
+  mkdirSync(join(root, 'src/content/addendum'), { recursive: true })
+  mkdirSync(join(root, 'src/content/pages/about'), { recursive: true })
+
+  writeFileSync(
+    join(root, 'src/content/home/index.en.md'),
+    [
+      '---',
+      'title: Welcome',
+      'avatarImage:',
+      "  src: './flopp2.jpeg'",
+      "  alt: 'Florian'",
+      '---',
+      '',
+      'Welcome from future home.',
+    ].join('\n'),
+  )
+  writeFileSync(join(root, 'src/content/flopp2.jpeg'), 'fake-image')
+
+  writeFileSync(
+    join(root, 'src/content/addendum/index.en.md'),
+    [
+      '---',
+      'title: Addendum Future',
+      'avatarImage:',
+      "  src: './avatar.jpg'",
+      "  alt: 'Avatar'",
+      '---',
+      '',
+      'Future addendum source.',
+    ].join('\n'),
+  )
+  writeFileSync(join(root, 'src/content/avatar.jpg'), 'fake-image')
+
+  writeFileSync(
+    join(root, 'src/content/pages/about/index.en.md'),
+    [
+      '---',
+      'title: About',
+      '---',
+      '',
+      'Future about page source.',
+    ].join('\n'),
+  )
+
+  return root
+}
+
 function validationIssueFixtureRoot(): string {
   const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
   mkdirSync(join(root, 'src/content/posts/hello'), { recursive: true })
@@ -193,6 +243,54 @@ function validationIssueFixtureRoot(): string {
       '---',
       '',
       'Frequently asked questions.',
+    ].join('\n'),
+  )
+
+  return root
+}
+
+function malformedTranslatedFrontmatterFixtureRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
+  mkdirSync(join(root, 'src/content/posts/hello'), { recursive: true })
+  writeFileSync(
+    join(root, 'src/content/posts/hello/index.md'),
+    [
+      '---',
+      'title: Hello',
+      'coverImage:',
+      "  src: './cover.jpg'",
+      "  alt: 'Cover alt'",
+      '---',
+      '',
+      'Hello source.',
+    ].join('\n'),
+  )
+  writeFileSync(join(root, 'src/content/posts/hello/index.it.md'), [
+    '---',
+    'title: Ciao',
+    'coverImage: [broken',
+    '  src: ./cover.jpg',
+    '---',
+    '',
+    'Ciao',
+  ].join('\n'))
+
+  return root
+}
+
+function malformedSourceFrontmatterFixtureRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
+  mkdirSync(join(root, 'src/content/posts/hello'), { recursive: true })
+  writeFileSync(
+    join(root, 'src/content/posts/hello/index.md'),
+    [
+      '---',
+      'title: Broken',
+      'tags: [',
+      '  - one',
+      '---',
+      '',
+      'Broken source.',
     ].join('\n'),
   )
 
@@ -282,6 +380,28 @@ describe('i18n filesystem helpers', () => {
     }
   })
 
+  test('discovers future localized page/home/addendum content sources', () => {
+    const root = futureLocalizedContentFixtureRoot()
+
+    try {
+      const sources = discoverEnglishSources(root)
+      const byKind = new Map(sources.map((source) => [`${source.kind}:${source.slug}`, source]))
+
+      expect(byKind.get('page:about')?.kind).toBe('page')
+      expect(destinationFor(byKind.get('page:about')!, 'it', root)).toMatch(/src\/content\/pages\/about\/index\.it\.md$/)
+
+      expect(byKind.get('home:home')?.kind).toBe('home')
+      expect(destinationFor(byKind.get('home:home')!, 'it', root)).toMatch(/src\/content\/home\/index\.it\.md$/)
+
+      expect(byKind.get('addendum:addendum')?.kind).toBe('addendum')
+      expect(destinationFor(byKind.get('addendum:addendum')!, 'it', root)).toMatch(
+        /src\/content\/addendum\/index\.it\.md$/,
+      )
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
   test('reports missing translations and validates when all files are present', () => {
     const root = futureSourceFixtureRoot()
 
@@ -320,6 +440,32 @@ describe('i18n filesystem helpers', () => {
       )
       expect(errors).toContain('Unsupported page slug at src/pages/faq.md: faq')
       expect(errors).toContain('Missing translation: src/content/pages/faq/index.it.md')
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('reports malformed translated frontmatter without throwing', () => {
+    const root = malformedTranslatedFrontmatterFixtureRoot()
+
+    try {
+      const errors = validateTranslations(root)
+
+      expect(errors).toContainEqual(expect.stringContaining('Malformed translated frontmatter in src/content/posts/hello/index.it.md'))
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('handles malformed source frontmatter without crashing', () => {
+    const root = malformedSourceFrontmatterFixtureRoot()
+
+    try {
+      const errors = validateTranslations(root)
+
+      expect(errors).toContainEqual(
+        expect.stringContaining('Malformed source frontmatter in src/content/posts/hello/index.md'),
+      )
     } finally {
       rmSync(root, { recursive: true, force: true })
     }

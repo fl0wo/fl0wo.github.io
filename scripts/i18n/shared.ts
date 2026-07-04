@@ -20,6 +20,7 @@ export type SourceFile = {
   extension: '.md' | '.mdx'
   content: string
   data: Record<string, unknown>
+  frontmatterError?: string
 }
 
 const contentDir = 'src/content'
@@ -37,37 +38,85 @@ function walk(dir: string): string[] {
   })
 }
 
+type ParsedMarkdown = {
+  content: string
+  data: Record<string, unknown>
+  frontmatterError?: string
+}
+
+function parseMarkdown(sourcePath: string): ParsedMarkdown {
+  const content = readFileSync(sourcePath, 'utf8')
+
+  try {
+    const { data } = matter(content)
+
+    return { content, data: data as Record<string, unknown> }
+  } catch (error) {
+    return {
+      content,
+      data: {},
+      frontmatterError: error instanceof Error ? error.message : String(error),
+    }
+  }
+}
+
 function parseContentSource(relativePath: string, sourcePath: string): SourceFile | undefined {
   const normalizedPath = relativePath.split(sep).join('/')
   const fileName = basename(normalizedPath)
   const extension = fileName.endsWith('.mdx') ? '.mdx' : '.md'
+  const parsed = parseMarkdown(sourcePath)
 
-  if (normalizedPath === 'home.md' || normalizedPath === 'home.mdx' || normalizedPath === 'home.en.md' || normalizedPath === 'home.en.mdx') {
+  if (normalizedPath.match(/^home(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)) {
+    const match = normalizedPath.match(/^home(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)
+    const locale = match?.[1]
+
+    if (locale && locale !== 'en') return undefined
+
     return {
       sourcePath,
       relativePath,
       slug: 'home',
       kind: 'home',
       extension: extension,
-      content: readFileSync(sourcePath, 'utf8'),
-      data: matter(readFileSync(sourcePath, 'utf8')).data,
+      content: parsed.content,
+      data: parsed.data,
+      frontmatterError: parsed.frontmatterError,
     } satisfies SourceFile
   }
 
-  if (
-    normalizedPath === 'addendum.md' ||
-    normalizedPath === 'addendum.mdx' ||
-    normalizedPath === 'addendum.en.md' ||
-    normalizedPath === 'addendum.en.mdx'
-  ) {
+  if (normalizedPath.match(/^addendum(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)) {
+    const match = normalizedPath.match(/^addendum(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)
+    const locale = match?.[1]
+
+    if (locale && locale !== 'en') return undefined
+
     return {
       sourcePath,
       relativePath,
       slug: 'addendum',
       kind: 'addendum',
       extension: extension,
-      content: readFileSync(sourcePath, 'utf8'),
-      data: matter(readFileSync(sourcePath, 'utf8')).data,
+      content: parsed.content,
+      data: parsed.data,
+      frontmatterError: parsed.frontmatterError,
+    } satisfies SourceFile
+  }
+
+  const pageMatch = normalizedPath.match(/^pages\/([^/]+)\/index(?:\.([^.]+))?\.(md|mdx)$/)
+  if (pageMatch) {
+    const [, slug, locale] = pageMatch
+
+    if (locale && locale !== 'en') return undefined
+
+    return {
+      sourcePath,
+      relativePath,
+      slug,
+      kind: 'page',
+      extension,
+      content: parsed.content,
+      data: parsed.data,
+      frontmatterError: parsed.frontmatterError,
     } satisfies SourceFile
   }
 
@@ -83,8 +132,9 @@ function parseContentSource(relativePath: string, sourcePath: string): SourceFil
       slug,
       kind: 'post',
       extension: extension,
-      content: readFileSync(sourcePath, 'utf8'),
-      data: matter(readFileSync(sourcePath, 'utf8')).data,
+      content: parsed.content,
+      data: parsed.data,
+      frontmatterError: parsed.frontmatterError,
     } satisfies SourceFile
   }
 
@@ -101,6 +151,7 @@ function parsePageSource(relativePath: string, sourcePath: string): SourceFile |
 
   const extension = sourcePath.endsWith('.mdx') ? '.mdx' : '.md'
   const slug = match[1]
+  const parsed = parseMarkdown(sourcePath)
 
   return {
     sourcePath,
@@ -108,8 +159,9 @@ function parsePageSource(relativePath: string, sourcePath: string): SourceFile |
     slug,
     kind: 'page',
     extension,
-    content: readFileSync(sourcePath, 'utf8'),
-    data: matter(readFileSync(sourcePath, 'utf8')).data,
+    content: parsed.content,
+    data: parsed.data,
+    frontmatterError: parsed.frontmatterError,
   } satisfies SourceFile
 }
 
@@ -357,6 +409,10 @@ export function validateTranslations(rootDir = process.cwd()): string[] {
   const sources = discoverEnglishSources(rootDir)
 
   for (const source of sources) {
+    if (source.frontmatterError) {
+      errors.push(`Malformed source frontmatter in ${relative(rootDir, source.sourcePath)}: ${source.frontmatterError}`)
+    }
+
     if (source.kind === 'page' && !supportedPages.has(source.slug)) {
       errors.push(`Unsupported page slug at ${relative(rootDir, source.sourcePath)}: ${source.slug}`)
     }
@@ -371,7 +427,13 @@ export function validateTranslations(rootDir = process.cwd()): string[] {
       }
 
       const translatedContent = readFileSync(destination, 'utf8')
-      const parsed = matter(translatedContent)
+      const parsed = parseMarkdown(destination)
+
+      if (parsed.frontmatterError) {
+        errors.push(`Malformed translated frontmatter in ${relativeDestination}: ${parsed.frontmatterError}`)
+        continue
+      }
+
       const sourceKeys = frontmatterKeys(source.data)
       const translatedKeys = frontmatterKeys(parsed.data)
 
