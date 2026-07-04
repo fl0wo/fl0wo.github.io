@@ -1,13 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { TagsGroup } from '~/utils'
+import { TagsGroup } from '~/content-utils'
+import { defaultLang, type Lang } from '~/i18n'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
+  lang?: Lang
 }
 
-const { posts } = Astro.props
-const tagsGroup = await TagsGroup.build(posts)
+const { posts, lang = defaultLang } = Astro.props
+const tagsGroup = await TagsGroup.build(lang, posts)
 ---
 
 <ul class="flex flex-wrap gap-x-3 gap-y-4 my-5">

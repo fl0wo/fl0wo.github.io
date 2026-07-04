@@ -1,73 +1,18 @@
 ---
-import Layout from '~/layouts/Layout.astro'
-import { getSortedPosts } from '~/utils'
-import { getCollection, render } from 'astro:content'
-import PostPreviewCompact from '~/components/PostPreviewCompact.astro'
-import Pagination from '~/components/Pagination.astro'
-import BlockHeader from '~/components/BlockHeader.astro'
-import HomeBanner from '~/components/HomeBanner.astro'
+import { routePath } from '~/i18n'
 
-const home = await getCollection('home')
-let HomeContent
-let homeAvatarImage
-let homeGithubCalendar
-if (home.length > 0) {
-  const homeEntry = home[0]
-  const { Content } = await render(homeEntry)
-  HomeContent = Content
-  homeAvatarImage = homeEntry.data.avatarImage
-  homeGithubCalendar = homeEntry.data.githubCalendar
-}
-const sortedPosts = await getSortedPosts()
-const postsHaveTags = sortedPosts.some(
-  (post) => post.data.tags && post.data.tags.length > 0,
-)
-
-const postsHaveSeries = sortedPosts.some((post) => post.data.series)
+const target = routePath('en', { type: 'home' })
 ---
 
-<Layout>
-  {
-    HomeContent && (
-      <HomeBanner avatarImage={homeAvatarImage} githubCalendar={homeGithubCalendar}>
-        <HomeContent />
-      </HomeBanner>
-    )
-  }
-  <!--{-->
-  <!--  postsHaveSeries && (-->
-  <!--    <section>-->
-  <!--      <BlockHeader>Series</BlockHeader>-->
-  <!--      <SeriesSection posts={sortedPosts} />-->
-  <!--    </section>-->
-  <!--  )-->
-  <!--}-->
-  <!--{-->
-  <!--  postsHaveTags && (-->
-  <!--    <section>-->
-  <!--      <BlockHeader>Tags</BlockHeader>-->
-  <!--      <TagsSection posts={sortedPosts} />-->
-  <!--    </section>-->
-  <!--  )-->
-  <!--}-->
-  {
-    sortedPosts.length > 0 && (
-      <section>
-        <BlockHeader>Articles</BlockHeader>
-        {sortedPosts
-          .reverse()
-          .slice(0, 10)
-          .map((post) => (
-            <PostPreviewCompact post={post} />
-          ))}
-        <Pagination nextLink="/posts" nextText="Archive" />
-      </section>
-    )
-  }
-</Layout>
-
-<style is:global>
-  a.heading-anchor {
-    display: none !important;
-  }
-</style>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <a href={target}>Continue to English</a>
+  </body>
+</html>

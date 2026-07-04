@@ -1,0 +1,49 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Layout from '~/layouts/Layout.astro'
+import { getSortedPosts } from '~/content-utils'
+import Pagination from '~/components/Pagination.astro'
+import siteConfig from '~/site.config'
+import PostPreviewCompact from '~/components/PostPreviewCompact.astro'
+import PageHeader from '~/components/PageHeader.astro'
+import { assertLang, supportedLangs, ui } from '~/i18n'
+
+// Note: Pagination like '/', '/2', '/3' only works with spread param like [...page]
+export const getStaticPaths = (async ({ paginate }) => {
+  const pages = []
+  for (const lang of supportedLangs) {
+    const sortedPosts = await getSortedPosts(lang)
+    pages.push(
+      ...paginate(sortedPosts.reverse(), {
+        params: { lang },
+        props: { lang },
+        pageSize: siteConfig.pageSize,
+      }),
+    )
+  }
+  return pages
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const t = ui[lang]
+const { page } = Astro.props
+const pageTitle = t.archiveTitle + (page.currentPage > 1 ? ` - Page ${page.currentPage}` : '')
+---
+
+<Layout
+  lang={lang}
+  route={{ type: 'posts', page: page.currentPage }}
+  title={pageTitle}
+  description={t.archiveDescription}
+>
+  <div class="mt-2 sm:mt-0">
+    <PageHeader titlePieces={[t.navArchive]} />
+    {page.data.map((post) => <PostPreviewCompact post={post} lang={lang} />)}
+    <Pagination
+      prevLink={page.url.prev ? page.url.prev : undefined}
+      prevText={t.newerPosts}
+      nextLink={page.url.next ? page.url.next : undefined}
+      nextText={t.olderPosts}
+    />
+  </div>
+</Layout>

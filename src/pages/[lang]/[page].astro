@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+import Layout from '~/layouts/Layout.astro'
+import { getLocalizedEntry } from '~/content-utils'
+import { assertLang, supportedLangs } from '~/i18n'
+
+export const getStaticPaths = (async () => {
+  const paths = []
+  for (const lang of supportedLangs) {
+    for (const page of ['about', 'projects'] as const) {
+      const entry = await getLocalizedEntry('pages', lang, page)
+      if (entry) {
+        paths.push({ params: { lang, page }, props: { lang, page, entry } })
+      }
+    }
+  }
+  return paths
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const page = Astro.params.page as 'about' | 'projects'
+const { entry } = Astro.props
+const { Content } = await render(entry)
+---
+
+<Layout
+  lang={lang}
+  route={{ type: 'page', slug: page }}
+  title={entry.data.title}
+  description={entry.data.description}
+>
+  <div class="max-w-full py-7.5">
+    <h1 class="md:mx-2 mb-3 text-[1.75rem] text-heading1 font-semibold">
+      # {entry.data.title}
+    </h1>
+    <div class="mb-5 prose">
+      <Content />
+    </div>
+  </div>
+</Layout>

@@ -1,14 +1,17 @@
 ---
-import { dateString, SeriesGroup } from '~/utils'
+import { dateString } from '~/utils'
+import { contentSlug, SeriesGroup } from '~/content-utils'
 import { render, type CollectionEntry } from 'astro:content'
 import type { Collation } from '~/types'
+import { defaultLang, type Lang } from '~/i18n'
 
 interface Props {
   post: CollectionEntry<'posts'>
+  lang?: Lang
   class?: string
 }
 
-const { post, class: className } = Astro.props
+const { post, lang = defaultLang, class: className } = Astro.props
 const { remarkPluginFrontmatter } = await render(post)
 const { minutesRead } = remarkPluginFrontmatter
 const seriesFrontmatter = post.data.series
@@ -16,13 +19,13 @@ let series: Collation<'posts'> | undefined
 let seriesPostNumber: number | undefined
 let seriesTotal: number | undefined
 if (seriesFrontmatter) {
-  const seriesGroup = await SeriesGroup.build()
+  const seriesGroup = await SeriesGroup.build(lang)
   series = seriesGroup.match(seriesFrontmatter)
   if (!series) {
     // This should never happen if the series data is correct
     throw new Error(`Series "${seriesFrontmatter}" not found`)
   }
-  seriesPostNumber = series.entries.findIndex((p) => p.id === post.id) + 1
+  seriesPostNumber = series.entries.findIndex((p) => contentSlug(p) === contentSlug(post)) + 1
   seriesTotal = series.entries.length
 }
 ---

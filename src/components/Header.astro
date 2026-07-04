@@ -4,22 +4,68 @@ import LightDarkAutoButton from '~/components/LightDarkAutoButton.astro'
 import Search from '~/components/Search.astro'
 import SelectTheme from '~/components/SelectTheme.astro'
 import NavLink from '~/components/NavLink.astro'
+import {
+  alternateLinks,
+  defaultLang,
+  languageMeta,
+  routePath,
+  ui,
+  type Lang,
+  type LocalizedRoute,
+} from '~/i18n'
+
+interface Props {
+  lang?: Lang
+  route?: LocalizedRoute
+}
 
 const lightDarkAutoTheme = siteConfig.themes.mode === 'light-dark-auto'
 const selectTheme =
   siteConfig.themes.mode === 'select' && siteConfig.themes.include.length > 1
+const { lang = defaultLang, route } = Astro.props
+const t = ui[lang]
+const navLinks = [
+  { name: t.navHome, url: routePath(lang, { type: 'home' }) },
+  { name: t.navAbout, url: routePath(lang, { type: 'page', slug: 'about' }) },
+  { name: t.navProjects, url: routePath(lang, { type: 'page', slug: 'projects' }) },
+  { name: t.navArchive, url: routePath(lang, { type: 'posts' }) },
+]
+const externalNavLinks = siteConfig.navLinks.filter((link) => link.external)
+const languageLinks = alternateLinks(route ?? { type: 'home' }).filter(
+  (link): link is { lang: Lang; href: string } => link.lang !== 'x-default',
+)
 ---
 
 <header>
   <div class="relative flex items-center justify-between bg-accent/10 rounded-xl">
     <a
       id="logo"
-      href="/"
+      href={routePath(lang, { type: 'home' })}
       class="block px-4 py-1.5 max-w-full no-underline items-center bg-accent text-background font-bold rounded-xl"
     >
       {siteConfig.title}
     </a>
     <div class="flex items-center gap-3 sm:mr-3">
+      <nav aria-label={t.languageSwitcherLabel} class="hidden sm:block text-sm">
+        <ul class="flex gap-2 m-0 p-0">
+          {
+            languageLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    'px-1.5 py-0.5 rounded hover:bg-accent/10',
+                    link.lang === lang && 'text-foreground font-bold',
+                  ]}
+                  aria-current={link.lang === lang ? 'page' : undefined}
+                >
+                  {languageMeta[link.lang].nativeLabel}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
       <Search trailingSlashes={siteConfig.trailingSlashes} />
       {lightDarkAutoTheme && <LightDarkAutoButton />}
       {selectTheme && <SelectTheme />}
@@ -38,9 +84,16 @@ const selectTheme =
           class="invisible absolute flex flex-col bg-background shadow text-accent border-2 m-0 p-2.5 top-11.5 left-auto right-0 z-50 rounded-xl"
         >
           {
-            siteConfig.navLinks.map((link) => (
+            [...navLinks, ...externalNavLinks].map((link) => (
               <li class="p-1" aria-expanded="false">
                 <NavLink link={link} />
+              </li>
+            ))
+          }
+          {
+            languageLinks.map((link) => (
+              <li class="p-1" aria-expanded="false">
+                <a href={link.href}>{languageMeta[link.lang].nativeLabel}</a>
               </li>
             ))
           }
@@ -51,7 +104,7 @@ const selectTheme =
   <nav aria-label="Menu" class="p-0 mt-4 ml-0.5 text-accent hidden sm:block">
     <ul class="flex flex-row text-accent">
       {
-        siteConfig.navLinks.map((link) => (
+        [...navLinks, ...externalNavLinks].map((link) => (
           <li class="mr-5" aria-expanded="true">
             <NavLink link={link} />
           </li>

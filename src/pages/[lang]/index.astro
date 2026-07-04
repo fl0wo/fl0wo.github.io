@@ -1,0 +1,60 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Layout from '~/layouts/Layout.astro'
+import { render } from 'astro:content'
+import PostPreviewCompact from '~/components/PostPreviewCompact.astro'
+import Pagination from '~/components/Pagination.astro'
+import BlockHeader from '~/components/BlockHeader.astro'
+import HomeBanner from '~/components/HomeBanner.astro'
+import { getLocalizedEntry, getSortedPosts } from '~/content-utils'
+import { assertLang, routePath, supportedLangs, ui, type Lang } from '~/i18n'
+
+export const getStaticPaths = (() => {
+  return supportedLangs.map((lang) => ({ params: { lang }, props: { lang } }))
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const t = ui[lang]
+const homeEntry = await getLocalizedEntry('home', lang, 'index')
+let HomeContent
+let homeAvatarImage
+let homeGithubCalendar
+if (homeEntry) {
+  const { Content } = await render(homeEntry)
+  HomeContent = Content
+  homeAvatarImage = homeEntry.data.avatarImage
+  homeGithubCalendar = homeEntry.data.githubCalendar
+}
+const sortedPosts = await getSortedPosts(lang)
+---
+
+<Layout lang={lang} route={{ type: 'home' }}>
+  {
+    HomeContent && (
+      <HomeBanner avatarImage={homeAvatarImage} githubCalendar={homeGithubCalendar}>
+        <HomeContent />
+      </HomeBanner>
+    )
+  }
+  {
+    sortedPosts.length > 0 && (
+      <section>
+        <BlockHeader>{t.articles}</BlockHeader>
+        {sortedPosts
+          .slice()
+          .reverse()
+          .slice(0, 10)
+          .map((post) => (
+            <PostPreviewCompact post={post} lang={lang} />
+          ))}
+        <Pagination nextLink={routePath(lang, { type: 'posts' })} nextText={t.navArchive} />
+      </section>
+    )
+  }
+</Layout>
+
+<style is:global>
+  a.heading-anchor {
+    display: none !important;
+  }
+</style>

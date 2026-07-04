@@ -7,26 +7,37 @@ import SelectThemeLoader from '~/components/SelectThemeLoader.astro'
 import siteConfig from '~/site.config'
 import { pick, resolveThemeColorStyles } from '~/utils'
 import crypto from 'crypto'
+import {
+  alternateLinks,
+  defaultLang,
+  languageMeta,
+  routePath,
+  type Lang,
+  type LocalizedRoute,
+} from '~/i18n'
 
 interface Props {
   title?: string
   description?: string
   tags?: string[]
   author?: string
+  lang?: Lang
+  route?: LocalizedRoute
 }
 
-const { title, description, tags, author } = Astro.props
+const { title, description, tags, author, lang = defaultLang, route } = Astro.props
+const meta = languageMeta[lang]
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') // Remove trailing slash for consistency
-const pageType = Astro.url.pathname.startsWith('/posts') ? 'article' : 'website'
+const pageType = Astro.url.pathname.startsWith(`/${lang}/posts/`) ? 'article' : 'website'
 const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title
 const pageDescription = description || siteConfig.description
 const pageAuthor = author || siteConfig.author
 const pageImage =
   pageType === 'article'
     ? Astro.url.origin +
-      Astro.url.pathname.replace(/\/posts\//, '/social-cards/') +
+      Astro.url.pathname.replace(`/${lang}/posts/`, `/${lang}/social-cards/`) +
       '.png'
-    : `${Astro.url.origin}/social-cards/__default.png`
+    : `${Astro.url.origin}/${lang}/social-cards/__default.png`
 const pageKeywords = [
   ...new Set(siteConfig.tags.concat(tags || []).map((word) => word.toLowerCase())),
 ].join(', ')
@@ -115,7 +126,8 @@ let generatedCss: string = cssLines.join('\n')
 
 <!doctype html>
 <html
-  lang="en"
+  lang={meta.locale}
+  dir={meta.dir}
   data-theme={defaultTheme}
   data-dark-theme={darkTheme}
   data-light-theme={lightTheme}
@@ -140,13 +152,23 @@ let generatedCss: string = cssLines.join('\n')
     {pageImage && <meta name="twitter:image" content={pageImage} />}
     <meta name="keywords" content={pageKeywords} />
     <link rel="canonical" href={pageUrl} />
+    {
+      route &&
+        alternateLinks(route).map((link) => (
+          <link
+            rel="alternate"
+            hreflang={link.lang}
+            href={new URL(link.href, Astro.site).href}
+          />
+        ))
+    }
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link
       rel="alternate"
       type="application/rss+xml"
       title={siteConfig.title}
-      href={new URL('rss.xml', Astro.site)}
+      href={new URL(routePath(lang, { type: 'rss' }), Astro.site)}
     />
     <title>{pageTitle}</title>
     <style is:global define:vars={baseCssVars}></style>
@@ -158,11 +180,11 @@ let generatedCss: string = cssLines.join('\n')
     <div
       class="flex flex-col max-w-4xl min-h-screen border-accent/10 m-auto p-3 sm:py-5 sm:px-6 md:py-10"
     >
-      <Header />
+      <Header lang={lang} route={route} />
       <main class="flex flex-col py-1">
         <slot />
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </div>
   </body>
 </html>

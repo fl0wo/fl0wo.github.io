@@ -1,13 +1,16 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { dateString } from '~/utils'
+import { contentSlug } from '~/content-utils'
+import { defaultLang, routePath, type Lang } from '~/i18n'
 
 interface Props {
   post: CollectionEntry<'posts'>
+  lang?: Lang
 }
 
-const { post } = Astro.props
-const articleLink = `/posts/${post.id}`
+const { post, lang = defaultLang } = Astro.props
+const articleLink = routePath(lang, { type: 'post', slug: contentSlug(post) })
 ---
 
 <article class="w-full py-2 border-b border-accent/10">

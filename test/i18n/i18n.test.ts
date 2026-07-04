@@ -9,6 +9,7 @@ import {
   supportedLangs,
   ui,
 } from '../../src/i18n'
+import { parseLocalizedId } from '../../src/content-id'
 
 describe('language metadata', () => {
   test('defines the supported languages and default language', () => {
@@ -34,6 +35,26 @@ describe('language metadata', () => {
       expect(ui[lang].navArchive.length).toBeGreaterThan(0)
       expect(ui[lang].languageSwitcherLabel.length).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('localized content ids', () => {
+  test('parses Astro content ids with sibling localized files', () => {
+    expect(parseLocalizedId('showing-off-blog-features/index.en')).toEqual({
+      slug: 'showing-off-blog-features',
+      lang: 'en',
+    })
+    expect(parseLocalizedId('about/index.it')).toEqual({ slug: 'about', lang: 'it' })
+    expect(parseLocalizedId('index.ar')).toEqual({ slug: 'index', lang: 'ar' })
+    expect(parseLocalizedId('showing-off-blog-features/indexzh')).toEqual({
+      slug: 'showing-off-blog-features',
+      lang: 'zh',
+    })
+  })
+
+  test('rejects unsupported localized ids', () => {
+    expect(() => parseLocalizedId('hello/index.de')).toThrow('Unsupported localized content id')
+    expect(() => parseLocalizedId('hello')).toThrow('Unsupported localized content id')
   })
 })
 
