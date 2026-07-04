@@ -1,7 +1,13 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { dirname, join, relative, sep } from 'node:path'
+import { basename, dirname, join, relative, sep } from 'node:path'
 import matter from 'gray-matter'
-import { defaultLang, isLang, languageMeta, type Lang, supportedLangs } from '../../src/i18n'
+import {
+  defaultLang,
+  isLang,
+  languageMeta,
+  type Lang,
+  supportedLangs,
+} from '../../src/i18n'
 
 export type ContentKind = 'home' | 'addendum' | 'page' | 'post'
 export type TranslationLang = Exclude<Lang, 'en'>
@@ -17,7 +23,10 @@ export type SourceFile = {
 }
 
 const contentDir = 'src/content'
+const pagesDir = 'src/pages'
 const translatableLangs = supportedLangs.filter((lang) => lang !== defaultLang) as TranslationLang[]
+const supportedPages = new Set(['about', 'projects'])
+const translationFilePattern = /^index\.([^.]+)\.(mdx?)$/
 
 function walk(dir: string): string[] {
   if (!existsSync(dir)) return []
@@ -28,80 +37,170 @@ function walk(dir: string): string[] {
   })
 }
 
-function parseKind(relativePath: string): { kind: ContentKind; slug: string } | undefined {
-  const parts = relativePath.split(sep)
+function parseContentSource(relativePath: string, sourcePath: string): SourceFile | undefined {
+  const normalizedPath = relativePath.split(sep).join('/')
+  const fileName = basename(normalizedPath)
+  const extension = fileName.endsWith('.mdx') ? '.mdx' : '.md'
 
-  if (relativePath === join('home', 'index.en.md') || relativePath === join('home', 'index.en.mdx')) {
-    return { kind: 'home', slug: 'home' }
+  if (normalizedPath === 'home.md' || normalizedPath === 'home.mdx' || normalizedPath === 'home.en.md' || normalizedPath === 'home.en.mdx') {
+    return {
+      sourcePath,
+      relativePath,
+      slug: 'home',
+      kind: 'home',
+      extension: extension,
+      content: readFileSync(sourcePath, 'utf8'),
+      data: matter(readFileSync(sourcePath, 'utf8')).data,
+    } satisfies SourceFile
   }
 
   if (
-    relativePath === join('addendum', 'index.en.md') ||
-    relativePath === join('addendum', 'index.en.mdx')
+    normalizedPath === 'addendum.md' ||
+    normalizedPath === 'addendum.mdx' ||
+    normalizedPath === 'addendum.en.md' ||
+    normalizedPath === 'addendum.en.mdx'
   ) {
-    return { kind: 'addendum', slug: 'addendum' }
+    return {
+      sourcePath,
+      relativePath,
+      slug: 'addendum',
+      kind: 'addendum',
+      extension: extension,
+      content: readFileSync(sourcePath, 'utf8'),
+      data: matter(readFileSync(sourcePath, 'utf8')).data,
+    } satisfies SourceFile
   }
 
-  if (parts[0] === 'pages' && parts.length === 3) {
-    return { kind: 'page', slug: parts[1] }
-  }
+  const postMatch = normalizedPath.match(/^posts\/([^/]+)\/index(?:\.([^.]+))?\.(md|mdx)$/)
+  if (postMatch) {
+    const [, slug, locale] = postMatch
 
-  if (parts[0] === 'posts' && parts.length === 3) {
-    return { kind: 'post', slug: parts[1] }
+    if (locale && locale !== 'en') return undefined
+
+    return {
+      sourcePath,
+      relativePath,
+      slug,
+      kind: 'post',
+      extension: extension,
+      content: readFileSync(sourcePath, 'utf8'),
+      data: matter(readFileSync(sourcePath, 'utf8')).data,
+    } satisfies SourceFile
   }
 
   return undefined
 }
 
-export function discoverEnglishSources(rootDir = process.cwd()): SourceFile[] {
-  const rootContentDir = join(rootDir, contentDir)
+function parsePageSource(relativePath: string, sourcePath: string): SourceFile | undefined {
+  const normalizedPath = relativePath.split(sep).join('/')
+  const match = normalizedPath.match(/^([^/]+)\.(md|mdx)$/)
 
-  return walk(rootContentDir)
-    .filter((filePath) => /index\.en\.mdx?$/.test(filePath))
-    .map((sourcePath) => {
-      const relativePath = relative(rootContentDir, sourcePath)
-      const parsed = parseKind(relativePath)
+  if (!match) {
+    return undefined
+  }
 
-      if (!parsed) return undefined
+  const extension = sourcePath.endsWith('.mdx') ? '.mdx' : '.md'
+  const slug = match[1]
 
-      const content = readFileSync(sourcePath, 'utf8')
-      const extension = sourcePath.endsWith('.mdx') ? '.mdx' : '.md'
-      const { data } = matter(content)
-
-      return {
-        sourcePath,
-        relativePath,
-        slug: parsed.slug,
-        kind: parsed.kind,
-        extension,
-        content,
-        data,
-      } satisfies SourceFile
-    })
-    .filter((source): source is SourceFile => Boolean(source))
-    .sort((a, b) => a.relativePath.localeCompare(b.relativePath))
+  return {
+    sourcePath,
+    relativePath,
+    slug,
+    kind: 'page',
+    extension,
+    content: readFileSync(sourcePath, 'utf8'),
+    data: matter(readFileSync(sourcePath, 'utf8')).data,
+  } satisfies SourceFile
 }
 
-export function destinationFor(source: SourceFile, lang: TranslationLang): string {
+function discoverFromContent(rootContentDir: string): SourceFile[] {
+  return walk(rootContentDir)
+    .map((sourcePath) => {
+      const filePathRelativeToContent = sourcePath.replace(`${rootContentDir}${sep}`, '')
+      const source = parseContentSource(filePathRelativeToContent, sourcePath)
+
+      if (!source) {
+        return undefined
+      }
+
+      return source
+    })
+    .filter((source): source is SourceFile => Boolean(source))
+}
+
+function discoverFromPages(rootPagesDir: string): SourceFile[] {
+  return walk(rootPagesDir)
+    .map((sourcePath) => {
+      const filePathRelativeToPages = sourcePath.replace(`${rootPagesDir}${sep}`, '')
+      return parsePageSource(filePathRelativeToPages, sourcePath)
+    })
+    .filter((source): source is SourceFile => Boolean(source))
+}
+
+export function discoverEnglishSources(rootDir = process.cwd()): SourceFile[] {
+  const rootContentDir = join(rootDir, contentDir)
+  const rootPagesDir = join(rootDir, pagesDir)
+
+  const allSources = [
+    ...discoverFromContent(rootContentDir),
+    ...discoverFromPages(rootPagesDir),
+  ].sort((a, b) => a.relativePath.localeCompare(b.relativePath))
+
+  return allSources
+}
+
+function expectedTranslationPaths(sources: SourceFile[], rootDir: string): Set<string> {
+  const paths = new Set<string>()
+
+  for (const source of sources) {
+    paths.add(source.sourcePath)
+    for (const lang of translatableLangs) {
+      paths.add(destinationFor(source, lang, rootDir))
+    }
+  }
+
+  return paths
+}
+
+function destinationDirectoriesForSources(sources: SourceFile[], rootDir: string): Set<string> {
+  const paths = new Set<string>()
+  for (const source of sources) {
+    paths.add(destinationDirectory(source, rootDir))
+  }
+  return paths
+}
+
+function destinationDirectory(source: SourceFile, rootDir: string): string {
+  switch (source.kind) {
+    case 'home':
+      return join(rootDir, contentDir, 'home')
+    case 'addendum':
+      return join(rootDir, contentDir, 'addendum')
+    case 'post':
+      return join(rootDir, contentDir, 'posts', source.slug)
+    case 'page':
+      return join(rootDir, contentDir, 'pages', source.slug)
+    default:
+      throw new Error(`Unsupported kind: ${source.kind}`)
+  }
+}
+
+export function destinationFor(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
   if (!isLang(lang) || lang === defaultLang) {
     throw new Error(`Unsupported translation language: ${lang}`)
   }
 
-  return join(dirname(source.sourcePath), `index.${lang}${source.extension}`)
+  return join(destinationDirectory(source, rootDir), `index.${lang}${source.extension}`)
 }
 
-export function promptPathFor(
-  source: SourceFile,
-  lang: TranslationLang,
-  rootDir = process.cwd(),
-): string {
+export function promptPathFor(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
   const folder = source.kind === 'post' ? 'posts' : source.kind === 'page' ? 'pages' : source.kind
   return join(rootDir, 'translation-prompts', lang, folder, `${source.slug}.prompt.md`)
 }
 
-export function buildTranslationPrompt(source: SourceFile, lang: TranslationLang): string {
+export function buildTranslationPrompt(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
   const meta = languageMeta[lang]
-  const relativeDestination = relative(process.cwd(), destinationFor(source, lang))
+  const relativeDestination = relative(rootDir, destinationFor(source, lang, rootDir))
 
   return [
     `Target language: ${meta.label} (${meta.nativeLabel})`,
@@ -133,13 +232,137 @@ function frontmatterKeys(data: Record<string, unknown>): string[] {
   return Object.keys(data).sort()
 }
 
+function frontmatterAssetRefs(data: Record<string, unknown>): Array<{ field: string; value: string }> {
+  const refFields = ['coverImage', 'avatarImage']
+
+  return refFields.flatMap((field) => {
+    const block = data[field]
+    if (!block || typeof block !== 'object') return []
+
+    if (Array.isArray(block)) return []
+
+    const src = (block as { src?: unknown }).src
+
+    if (typeof src === 'string' && src.trim().startsWith('./')) {
+      return [{ field, value: src }]
+    }
+
+    return []
+  })
+}
+
+function validateFrontmatterAssets(
+  translationPath: string,
+  translationData: Record<string, unknown>,
+  rootDir: string,
+  errors: string[],
+): void {
+  const refs = frontmatterAssetRefs(translationData)
+
+  for (const { field, value } of refs) {
+    const translationDir = dirname(translationPath)
+    const translationAssetPath = join(translationDir, value)
+    if (!existsSync(translationAssetPath)) {
+      errors.push(`Missing ${field}.src referenced by ${relative(rootDir, translationPath)}: ${value}`)
+    }
+  }
+}
+
+function validateLocalLinks(content: string, sourcePath: string): string[] {
+  return [...content.matchAll(/\]\((\.\/[^)\s]+)(?:\s+['"][^'"]+['"])?\)/g)]
+    .map((match) => match[1])
+    .map((localRef) => {
+      const assetPath = join(dirname(sourcePath), localRef)
+      return existsSync(assetPath) ? '' : localRef
+    })
+    .filter(Boolean)
+}
+
+function validateUnsupportedLocaleFiles(source: SourceFile, rootDir: string, errors: string[]): void {
+  const destinationDir = destinationDirectory(source, rootDir)
+
+  if (!existsSync(destinationDir)) return
+
+  const translatedFiles = readdirSync(destinationDir, { withFileTypes: true })
+
+  for (const entry of translatedFiles) {
+    if (!entry.isFile()) continue
+
+    const match = entry.name.match(/^index\.([^.]+)\.(mdx?)$/)
+    if (!match) continue
+
+    const locale = match[1]
+    const ext = `.${match[2]}` as '.md' | '.mdx'
+    const translatedFile = join(destinationDir, entry.name)
+    const translatedRelative = relative(rootDir, translatedFile)
+
+    if (locale === defaultLang) {
+      if (ext !== source.extension) {
+        errors.push(`Unsupported translation extension in ${translatedRelative}: ${ext} for default language`)
+      }
+
+      continue
+    }
+
+    if (!isLang(locale)) {
+      errors.push(`Unsupported translation language in ${translatedRelative}: ${locale}`)
+      continue
+    }
+
+    if (ext !== source.extension) {
+      errors.push(`Unsupported translation extension in ${translatedRelative}: ${ext}`)
+      continue
+    }
+
+    const localeExpected = destinationFor(source, locale as TranslationLang, rootDir)
+    if (translatedFile !== localeExpected) {
+      errors.push(`Route/layout mismatch for translation path: expected ${relative(rootDir, localeExpected)}, found ${translatedRelative}`)
+    }
+  }
+}
+
+function validateRouteLayout(rootDir: string, sources: SourceFile[], errors: string[]): void {
+  const rootContent = join(rootDir, contentDir)
+  if (!existsSync(rootContent)) return
+
+  const expected = expectedTranslationPaths(sources, rootDir)
+  const expectedDestinationDirs = destinationDirectoriesForSources(sources, rootDir)
+  const translationCandidates = walk(rootContent).filter((filePath) => translationFilePattern.test(basename(filePath)))
+
+  for (const candidate of translationCandidates) {
+    if (expected.has(candidate)) continue
+
+    const translatedRelative = relative(rootDir, candidate)
+    const fileName = basename(candidate)
+    const match = fileName.match(translationFilePattern)
+
+    if (!match) continue
+
+    const [_, locale] = match
+    const directory = dirname(candidate)
+
+    if (!expectedDestinationDirs.has(directory)) {
+      errors.push(`Route/layout mismatch for translation path: expected translated files in source-mapped directories, found ${translatedRelative}`)
+      continue
+    }
+
+    if (locale !== defaultLang && !isLang(locale)) {
+      continue
+    }
+  }
+}
+
 export function validateTranslations(rootDir = process.cwd()): string[] {
   const errors: string[] = []
   const sources = discoverEnglishSources(rootDir)
 
   for (const source of sources) {
+    if (source.kind === 'page' && !supportedPages.has(source.slug)) {
+      errors.push(`Unsupported page slug at ${relative(rootDir, source.sourcePath)}: ${source.slug}`)
+    }
+
     for (const lang of translatableLangs) {
-      const destination = destinationFor(source, lang)
+      const destination = destinationFor(source, lang, rootDir)
       const relativeDestination = relative(rootDir, destination)
 
       if (!existsSync(destination)) {
@@ -158,16 +381,24 @@ export function validateTranslations(rootDir = process.cwd()): string[] {
         )
       }
 
-      const localRefs = [...translatedContent.matchAll(/\]\((\.\/[^)\s]+)(?:\s+['"][^'"]+['"])?\)/g)].map((match) => match[1])
+      const localRefs = validateLocalLinks(translatedContent, destination)
 
       for (const localRef of localRefs) {
-        const assetPath = join(dirname(destination), localRef)
-        if (!existsSync(assetPath)) {
-          errors.push(`Missing local asset referenced by ${relativeDestination}: ${localRef}`)
-        }
+        errors.push(`Missing local asset referenced by ${relativeDestination}: ${localRef}`)
       }
+
+      validateFrontmatterAssets(
+        destination,
+        parsed.data as Record<string, unknown>,
+        rootDir,
+        errors,
+      )
     }
+
+    validateUnsupportedLocaleFiles(source, rootDir, errors)
   }
+
+  validateRouteLayout(rootDir, sources, errors)
 
   return errors
 }

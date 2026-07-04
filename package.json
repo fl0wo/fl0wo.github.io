@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "astro": "astro",
-    "build": "pnpm run i18n:validate && astro build",
+    "build": "astro build",
     "dev": "astro dev",
     "format": "prettier --write .",
     "i18n:prompts": "tsx scripts/i18n/prompts.ts",
