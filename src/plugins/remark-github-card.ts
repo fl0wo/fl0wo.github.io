@@ -27,6 +27,24 @@ const DIRECTIVE_NAME = 'github'
 const USER_AGENT = 'nodejs'
 // 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0',
 
+function githubHeaders(): Record<string, string> {
+  const headers: Record<string, string> = { 'User-Agent': USER_AGENT }
+  const token = process.env.GITHUB_TOKEN
+  if (token) headers.Authorization = `Bearer ${token}`
+  return headers
+}
+
+/** Plain link card used when the GitHub API is unavailable (e.g. rate-limited).
+ * A degraded card must never fail the whole page render. */
+function fallbackCard(label: string, url: string): P {
+  return h('div', { class: 'github-card' }, [
+    h('div', { class: 'gh-title' }, [
+      h('a', { class: 'gh-text', href: url }, [{ type: 'text', value: label }]),
+      h('span', { class: 'gh-icon' }),
+    ]),
+  ])
+}
+
 export const remarkGithubCard: Plugin<[], Root> = () => async (tree) => {
   tree.children = await Promise.all(
     tree.children.map(async (node): Promise<RootContent> => {
@@ -49,12 +67,13 @@ export const remarkGithubCard: Plugin<[], Root> = () => async (tree) => {
       // If its a repo link
       if (repoParts.length > 1) {
         const res = await fetch(`https://api.github.com/repos/${repoName}`, {
-          headers: {
-            'User-Agent': USER_AGENT,
-          },
-        })
+          headers: githubHeaders(),
+        }).catch(() => null)
         if (!res || res.status !== 200) {
-          throw new Error(`Fetching GitHub repo data for "${repoName}" failed`)
+          console.warn(
+            `[remark-github-card] Fetching GitHub repo data for "${repoName}" failed (status ${res?.status ?? 'network error'}); rendering plain link card`,
+          )
+          return fallbackCard(`${repoParts[0]}/${repoParts[1]}`, realUrl)
         }
         const data = await res.json()
         const description = data.description
@@ -108,12 +127,13 @@ export const remarkGithubCard: Plugin<[], Root> = () => async (tree) => {
       // If its a user link
       else if (repoParts.length === 1) {
         const res = await fetch(`https://api.github.com/users/${repoName}`, {
-          headers: {
-            'User-Agent': USER_AGENT,
-          },
-        })
+          headers: githubHeaders(),
+        }).catch(() => null)
         if (!res || res.status !== 200) {
-          throw new Error(`Fetching GitHub user data for "${repoName}" failed`)
+          console.warn(
+            `[remark-github-card] Fetching GitHub user data for "${repoName}" failed (status ${res?.status ?? 'network error'}); rendering plain link card`,
+          )
+          return fallbackCard(repoParts[0], realUrl)
         }
         const data = await res.json()
         const backgroundImage = data.avatar_url
