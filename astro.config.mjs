@@ -28,7 +28,9 @@ import rehypePixelated from './src/plugins/rehype-pixelated'
 // https://astro.build/config
 export default defineConfig({
   site: siteConfig.site,
-  trailingSlash: siteConfig.trailingSlashes ? 'always' : 'never',
+  // 'ignore' accepts both /it and /it/ (a strict 'never' 404s any trailing-slash
+  // URL in dev and on-demand rendering); generated links stay slash-less.
+  trailingSlash: siteConfig.trailingSlashes ? 'always' : 'ignore',
   prefetch: true,
 
   markdown: {
