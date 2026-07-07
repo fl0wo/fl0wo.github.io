@@ -1,6 +1,6 @@
 ---
 title: 'Log puliti sono infrastruttura per agenti'
-published: 2026-07-07
+published: 2026-07-07 
 draft: false
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true

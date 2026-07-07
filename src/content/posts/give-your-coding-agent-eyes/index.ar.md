@@ -1,6 +1,6 @@
 ---
 title: 'امنح وكيل البرمجة لديك عيونًا: مهارات Cloudflare وخادم Observability MCP ونهج TDD المحلي أولًا'
-published: 2026-07-04
+published: 2026-07-04 
 draft: false
 tags: ['claude-code', 'cloudflare', 'agentic-coding', 'tdd', 'observability', 'vitest']
 toc: true

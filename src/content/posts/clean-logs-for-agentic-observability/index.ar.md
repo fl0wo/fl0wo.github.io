@@ -1,7 +1,7 @@
 ---
 title: 'السجلات النظيفة بنية تحتية للوكلاء'
 published: 2026-07-07
-draft: false
+draft: false 
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true
 coverImage:
