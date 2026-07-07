@@ -4,6 +4,9 @@ published: 2026-07-07
 draft: false
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true
+coverImage:
+  src: './blog2.png'
+  alt: 'Sketch-style illustration of a robot pouring a tangle of noisy raw production logs through an observability filter funnel, turning them into clean structured log events with consistent fields on the right, above an agent observability dashboard showing events over time, error rate and top endpoints'
 ---
 
 Coding agents can read code. They can run tests. They can search docs. And, if you give them access, they can inspect production logs through observability MCP servers.

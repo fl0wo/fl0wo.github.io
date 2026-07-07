@@ -4,6 +4,9 @@ published: 2026-07-07
 draft: false
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true
+coverImage:
+  src: './blog2.png'
+  alt: '素描风格插画:一个机器人将左侧杂乱嘈杂的原始生产日志倒入可观测性过滤漏斗,在右侧转化为字段一致、干净的结构化日志事件,下方是显示事件趋势、错误率和热门端点的智能体可观测性仪表盘'
 ---
 
 编程智能体能读代码,能跑测试,能查文档。而且,只要你给它访问权限,它还能通过可观测性 MCP 服务器检查生产日志。

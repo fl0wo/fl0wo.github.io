@@ -4,6 +4,9 @@ published: 2026-07-07
 draft: false
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true
+coverImage:
+  src: './blog2.png'
+  alt: 'Illustrazione in stile schizzo di un robot che versa un groviglio di log di produzione grezzi e rumorosi in un imbuto-filtro di observability, trasformandoli a destra in eventi di log strutturati e puliti con campi coerenti, sopra una dashboard di observability per agenti con eventi nel tempo, tasso di errore e principali endpoint'
 ---
 
 I coding agent sanno leggere il codice. Sanno eseguire i test. Sanno cercare nella documentazione. E, se gli dai accesso, sanno ispezionare i log di produzione tramite i server MCP di observability.
