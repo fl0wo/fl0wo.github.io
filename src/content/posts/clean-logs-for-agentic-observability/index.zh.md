@@ -1,7 +1,7 @@
 ---
 title: '干净的日志是智能体的基础设施'
 published: 2026-07-07
-draft: true
+draft: false
 tags: ['agentic-coding', 'observability', 'cloudflare', 'mcp', 'logging', 'debugging']
 toc: true
 ---
