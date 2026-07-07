@@ -1,0 +1,59 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        shell: bash
+        env:
+          # remark-github-card fetches the GitHub API at build time; without a
+          # token, shared runner IPs exhaust the 60 req/h unauthenticated limit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run build 2>&1 | tee build.log
+
+      - name: Guard against silently-broken pages
+        run: |
+          # astro build exits 0 even when the content layer fails to render a
+          # post, shipping a page with an empty body — fail the deploy instead
+          if grep -qi "error rendering" build.log; then
+            echo "::error::Astro swallowed a render error — a post would deploy with an empty body"
+            grep -i "error rendering" build.log
+            exit 1
+          fi
+          echo "Post page sizes:"
+          find dist -path '*posts*' -name index.html -exec du -h {} +
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm
