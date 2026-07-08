@@ -4,6 +4,9 @@ published: 2026-07-08
 draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
+coverImage:
+  src: './blog3.png'
+  alt: 'رسم بألوان مائية لمطوّر يتأمل خريطة قاعدة كود مرسومة يدويًا بفروع web وapi وworker مع بطاقات وثائق ومخطط معماري، بينما يعرض روبوت مساعد ودود إيجاد الأنماط وشرح التدفقات واقتراح التغييرات وكتابة الكود، تحت عبارة "AI agents write code. Humans steer the journey."'
 ---
 
 أصبح وكلاء البرمجة من الجودة بحيث لم يعد الجزء الغريب هو ما إذا كانوا قادرين على كتابة الكود.

@@ -4,6 +4,9 @@ published: 2026-07-08
 draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
+coverImage:
+  src: './blog3.png'
+  alt: '水彩素描:一位开发者正在研究一张手绘的代码库地图,包含 web、api 和 worker 分支、文档卡片和架构图,旁边一个友好的机器人助手表示可以查找模式、解释流程、建议修改和编写代码,上方写着 "AI agents write code. Humans steer the journey."'
 ---
 
 编程智能体已经足够好了,以至于奇怪的地方不再是它们能不能写代码。

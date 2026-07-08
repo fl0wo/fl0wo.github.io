@@ -23,6 +23,9 @@ published: 2026-07-08
 draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
+coverImage:
+  src: './blog3.png'
+  alt: 'Watercolor sketch of a developer studying a hand-drawn codebase map with web, api and worker branches, docs cards and an architecture diagram, while a friendly robot assistant offers to find patterns, explain flows, suggest changes and write code, under the caption "AI agents write code. Humans steer the journey."'
 ---
 
 Coding agents are getting good enough that the strange part is no longer whether they can write code.

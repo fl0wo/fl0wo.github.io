@@ -4,6 +4,9 @@ published: 2026-07-08
 draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
+coverImage:
+  src: './blog3.png'
+  alt: 'Schizzo ad acquerello di uno sviluppatore che studia una mappa della codebase disegnata a mano con rami web, api e worker, schede di documentazione e un diagramma di architettura, mentre un robot assistente amichevole si offre di trovare pattern, spiegare i flussi, suggerire modifiche e scrivere codice, sotto la didascalia "AI agents write code. Humans steer the journey."'
 ---
 
 I coding agent stanno diventando così bravi che la parte strana non è più se sanno scrivere codice.
