@@ -1,7 +1,7 @@
 ---
 title: 'تعلّم قاعدة الكود بنية تحتية للوكلاء'
 published: 2026-07-08
-draft: true
+draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
 ---

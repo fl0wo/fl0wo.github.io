@@ -1,7 +1,7 @@
 ---
 title: '代码库学习是智能体的基础设施'
 published: 2026-07-08
-draft: true
+draft: false
 tags: ['agentic-coding', 'codebase-learning', 'developer-tools', 'ai-agents', 'software-engineering']
 toc: true
 ---
