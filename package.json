@@ -14,7 +14,9 @@
     "postbuild": "pagefind --site dist",
     "preview": "astro preview",
     "test": "vitest run",
-    "deploy": "pnpm run build && npx wrangler deploy"
+    "deploy": "pnpm run build && npx wrangler deploy",
+    "logout": "npx wrangler logout",
+    "login": "npx wrangler login"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.6",
