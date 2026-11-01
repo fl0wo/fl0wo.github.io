@@ -2,8 +2,6 @@
 githubCalendar: 'fl0wo'
 ---
 
-Founder di [Bluvo](https://bluvo.dev), API per depositi diretti da CEX <-> DeFi.
-
-Ho comprato BTC a \$500 e l'ho venduto a \$11k quando avevo 19 anni, poi l'ho ricomprato e non l'ho piu venduto T.T
+Founder di [Bluvo](https://bluvo.dev) (acquisita da [Mesh](https://meshpay.com)), API per depositi diretti da CEX <-> DeFi.
 
 Amo risolvere problemi reali e rendere piu facile la vita degli sviluppatori.
