@@ -28,7 +28,9 @@ function transformUnhandledDirective(
 ) {
   const textNode = {
     type: 'text',
-    value: toMarkdown(node, { extensions: [directiveToMarkdown()] }),
+    // toMarkdown ends its output with a newline; keep it out, or text like "Qur'an 105:1)"
+    // (where ":1" parses as a directive) renders as "105:1 )".
+    value: toMarkdown(node, { extensions: [directiveToMarkdown()] }).replace(/\n$/, ''),
   } as const
   if (node.type === 'textDirective') {
     parent.children[index] = textNode

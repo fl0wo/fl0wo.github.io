@@ -13,8 +13,7 @@ import PostPreview from '~/components/PostPreview.astro'
 import DividerText from '~/components/DividerText.astro'
 import { render, type CollectionEntry } from 'astro:content'
 import PostAddendum from '~/components/PostAddendum.astro'
-import TableOfContents from '~/components/TableOfContents.astro'
-import { Image } from 'astro:assets'
+import ArticleView from '~/components/ArticleView.astro'
 import GiscusLoader from '~/components/GiscusLoader.astro'
 import siteConfig from '~/site.config'
 import Tags from '~/components/Tags.astro'
@@ -87,41 +86,26 @@ if (postData.tags && postData.tags.length > 0) {
   author={postData.author}
   tags={postData.tags}
 >
-  <article class="max-w-full py-7.5" data-pagefind-body>
-    {
-      postData.coverImage && (
-        <Image
-          priority
-          layout="constrained"
-          src={postData.coverImage.src}
-          alt={postData.coverImage.alt}
-          class="w-full rounded-xl mb-5"
-        />
-      )
-    }
-    <div class="md:mx-2">
-      <h1 id={postSlug} class="mb-4 text-[1.75rem] text-heading1 font-semibold">
-        # {postData.title}
-      </h1>
-      <div class="my-2 border-l-2 border-accent/80 pl-4 py-2">
-        <PostInfo post={post} lang={lang} class="mb-1" />
-        {
-          tags && (
-            <div class="mt-4">
-              <Tags tags={tags} />
-            </div>
-          )
-        }
-      </div>
-    </div>
-    <!-- <hr class="border-accent/10 border-2 rounded-xl hidden lg:block" /> -->
-    <div class="flex flex-col xl:gap-1 2xl:gap-18 xl:flex-row xl:items-start">
-      {postData.toc && headings.length > 0 && <TableOfContents headings={headings} />}
-      <div class="mb-5 xl:min-w-full 2xl:min-w-full prose">
-        <PostContent />
-      </div>
-    </div>
-  </article>
+  <ArticleView
+    title={postData.title}
+    anchorId={postSlug}
+    headings={headings}
+    toc={postData.toc}
+    coverImage={postData.coverImage}
+    searchable
+  >
+    <Fragment slot="meta">
+      <PostInfo post={post} lang={lang} class="mb-1" />
+      {
+        tags && (
+          <div class="mt-4">
+            <Tags tags={tags} />
+          </div>
+        )
+      }
+    </Fragment>
+    <PostContent />
+  </ArticleView>
   {
     nextPostInSeries && (
       <a

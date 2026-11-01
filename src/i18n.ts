@@ -19,6 +19,9 @@ export const languageMeta: Record<Lang, LanguageMeta> = {
   zh: { code: 'zh', label: 'Chinese', nativeLabel: '中文', dir: 'ltr', locale: 'zh-CN' },
 }
 
+/** Plural variants keyed by Intl.PluralRules category; `other` is the fallback. */
+export type PluralText = Partial<Record<Intl.LDMLPluralRule, string>> & { other: string }
+
 export type UiText = {
   navHome: string
   navAbout: string
@@ -43,6 +46,13 @@ export type UiText = {
   searchProductionOnly: string
   footerText: string
   languageSwitcherLabel: string
+  ilmTitle: string
+  ilmDescription: string
+  lessons: string
+  /** Template: `{n}` is replaced with the lesson number. */
+  lessonNumber: string
+  /** Templates: `{n}` is replaced with the number of lessons. */
+  lessonCount: PluralText
 }
 
 export const ui: Record<Lang, UiText> = {
@@ -71,6 +81,11 @@ export const ui: Record<Lang, UiText> = {
       'Search is only available in production builds. Try building and previewing the site to test it out locally.',
     footerText: '© 2025 Florian Sabani, from Italy with pizza and love. All rights reserved.',
     languageSwitcherLabel: 'Language',
+    ilmTitle: '3lm',
+    ilmDescription: 'Notes from my studies',
+    lessons: 'Lessons',
+    lessonNumber: 'Lesson {n}',
+    lessonCount: { one: '{n} lesson', other: '{n} lessons' },
   },
   it: {
     navHome: 'Home',
@@ -97,6 +112,11 @@ export const ui: Record<Lang, UiText> = {
       'La ricerca è disponibile solo nelle build di produzione. Crea una build e visualizza l’anteprima del sito per provarla localmente.',
     footerText: '© 2025 Florian Sabani, dall’Italia con pizza e amore. Tutti i diritti riservati.',
     languageSwitcherLabel: 'Lingua',
+    ilmTitle: '3lm',
+    ilmDescription: 'Appunti dei miei studi',
+    lessons: 'Lezioni',
+    lessonNumber: 'Lezione {n}',
+    lessonCount: { one: '{n} lezione', other: '{n} lezioni' },
   },
   ar: {
     navHome: 'الرئيسية',
@@ -123,6 +143,11 @@ export const ui: Record<Lang, UiText> = {
       'البحث متاح فقط في builds الإنتاج. ابن الموقع واعرضه محليا لتجربته.',
     footerText: '© 2025 فلوريان ساباني، من إيطاليا مع البيتزا والحب. جميع الحقوق محفوظة.',
     languageSwitcherLabel: 'اللغة',
+    ilmTitle: 'علم',
+    ilmDescription: 'ملاحظات من دراستي',
+    lessons: 'الدروس',
+    lessonNumber: 'الدرس {n}',
+    lessonCount: { other: 'عدد الدروس: {n}' },
   },
   zh: {
     navHome: '首页',
@@ -149,6 +174,11 @@ export const ui: Record<Lang, UiText> = {
       '搜索仅在生产构建中可用。请构建并预览网站以在本地测试。',
     footerText: '© 2025 Florian Sabani，来自意大利，带着披萨与热爱。保留所有权利。',
     languageSwitcherLabel: '语言',
+    ilmTitle: '3lm',
+    ilmDescription: '我的学习笔记',
+    lessons: '课程',
+    lessonNumber: '第 {n} 课',
+    lessonCount: { other: '共 {n} 课' },
   },
 }
 
@@ -160,6 +190,51 @@ export type LocalizedRoute =
   | { type: 'tag'; slug: string; page?: number }
   | { type: 'series'; slug: string }
   | { type: 'rss' }
+  | { type: 'ilmIndex' }
+  | { type: 'ilmArchive'; archive: string }
+  | { type: 'ilmLesson'; archive: string; lesson: string }
+
+/**
+ * URL segment of the unlisted study section (/{lang}/3lm/...).
+ * Must match the folder name in src/pages/[lang]/ and src/content/.
+ */
+export const ilmSegment = '3lm'
+
+const unlistedRouteTypes: ReadonlySet<LocalizedRoute['type']> = new Set([
+  'ilmIndex',
+  'ilmArchive',
+  'ilmLesson',
+])
+
+/**
+ * Unlisted routes are reachable by direct URL only: they are never linked from
+ * public pages, and are kept out of the sitemap, the search index and search engines.
+ */
+export function isUnlistedRoute(route: LocalizedRoute): boolean {
+  return unlistedRouteTypes.has(route.type)
+}
+
+const unlistedPathPattern = new RegExp(
+  `^/(?:(?:${supportedLangs.join('|')})/)?${ilmSegment}(?:/|$)`,
+)
+
+/** Path-based twin of isUnlistedRoute, for build tooling that only sees URLs (e.g. the sitemap). */
+export function isUnlistedPath(pathname: string): boolean {
+  return unlistedPathPattern.test(pathname)
+}
+
+/** Picks the plural variant for `n` in `lang` and fills its `{n}` placeholder. */
+export function formatPlural(lang: Lang, text: PluralText, n: number): string {
+  const category = new Intl.PluralRules(languageMeta[lang].locale).select(n)
+  return formatUi(text[category] ?? text.other, { n })
+}
+
+/** Fills `{name}` placeholders in a UI string template. */
+export function formatUi(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
 
 export function isLang(value: string): value is Lang {
   return supportedLangs.includes(value as Lang)
@@ -193,6 +268,12 @@ export function routePath(lang: Lang, route: LocalizedRoute): string {
       return `${prefix}/series/${encodeURIComponent(route.slug)}`
     case 'rss':
       return `${prefix}/rss.xml`
+    case 'ilmIndex':
+      return `${prefix}/${ilmSegment}`
+    case 'ilmArchive':
+      return `${prefix}/${ilmSegment}/${encodeURIComponent(route.archive)}`
+    case 'ilmLesson':
+      return `${prefix}/${ilmSegment}/${encodeURIComponent(route.archive)}/${encodeURIComponent(route.lesson)}`
   }
 }
 

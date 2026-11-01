@@ -1,0 +1,71 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+import Layout from '~/layouts/Layout.astro'
+import ArticleView from '~/components/ArticleView.astro'
+import ArticleMeta from '~/components/ArticleMeta.astro'
+import Pagination from '~/components/Pagination.astro'
+import ScrollUpButton from '~/components/ScrollUpButton.astro'
+import { getIlmArchives, lessonLabel } from '~/ilm'
+import { assertLang, supportedLangs } from '~/i18n'
+
+export const getStaticPaths = (async () => {
+  const paths = []
+  for (const lang of supportedLangs) {
+    for (const archive of await getIlmArchives(lang)) {
+      archive.lessons.forEach((lesson, index) => {
+        paths.push({
+          params: { lang, archive: archive.slug, lesson: lesson.slug },
+          props: { archive, index },
+        })
+      })
+    }
+  }
+  return paths
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const { archive, index } = Astro.props
+const lesson = archive.lessons[index]
+const prev = archive.lessons[index - 1]
+const next = archive.lessons[index + 1]
+const data = lesson.entry.data
+const { headings, Content, remarkPluginFrontmatter } = await render(lesson.entry)
+---
+
+<Layout
+  lang={lang}
+  route={{ type: 'ilmLesson', archive: archive.slug, lesson: lesson.slug }}
+  title={data.title}
+  description={data.description}
+  author={data.author}
+>
+  <ArticleView
+    title={data.title}
+    anchorId={lesson.slug}
+    headings={headings}
+    toc={data.toc}
+    coverImage={data.coverImage}
+    searchable={false}
+  >
+    <ArticleMeta
+      slot="meta"
+      class="mb-1"
+      date={data.published}
+      author={data.author}
+      minutesRead={remarkPluginFrontmatter.minutesRead}
+      badge={{
+        label: `${archive.entry.data.title} · ${lessonLabel(lang, lesson)}`,
+        href: archive.href,
+      }}
+    />
+    <Content />
+  </ArticleView>
+  <Pagination
+    prevLink={prev?.href}
+    prevText={prev && lessonLabel(lang, prev)}
+    nextLink={next?.href}
+    nextText={next && lessonLabel(lang, next)}
+  />
+  <ScrollUpButton />
+</Layout>

@@ -403,6 +403,21 @@ function routeLayoutMismatchFixtureRoot(): string {
   return root
 }
 
+function ilmFixtureRoot(): string {
+  const root = mkdtempSync(join(tmpdir(), 'fl0wo-i18n-'))
+  const lessonDir = join(root, 'src/content/3lm/seera/01-intro')
+  mkdirSync(lessonDir, { recursive: true })
+  writeFileSync(
+    join(root, 'src/content/3lm/seera/index.en.md'),
+    ['---', "title: 'Seerah'", 'order: 1', '---', '', 'Archive intro.'].join('\n'),
+  )
+  writeFileSync(
+    join(lessonDir, 'index.en.md'),
+    ['---', "title: 'Intro'", 'published: 2026-11-01', 'lesson: 1', '---', '', 'Lesson body.'].join('\n'),
+  )
+  return root
+}
+
 describe('i18n filesystem helpers', () => {
   test('discovers legacy home/addendum/pages/posts and maps future content to stable destinations', () => {
     const root = legacySourceFixtureRoot()
@@ -611,6 +626,67 @@ describe('i18n filesystem helpers', () => {
       expect(errors).toContain(
         'Route/layout mismatch for translation path: expected translated files in source-mapped directories, found src/content/wrong-slug/index.it.md',
       )
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('lets drafts skip translations until they are published', () => {
+    const root = futureSourceFixtureRoot()
+    const source = join(root, 'src/content/posts/hello/index.en.md')
+
+    try {
+      writeFileSync(source, readFileSync(source, 'utf8').replace('title: Hello', 'title: Hello\ndraft: true'))
+      expect(validateTranslations(root)).toEqual([])
+
+      writeFileSync(source, readFileSync(source, 'utf8').replace('draft: true', 'draft: false'))
+      expect(validateTranslations(root)).toContain('Missing translation: src/content/posts/hello/index.it.md')
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('discovers 3lm archives and lessons and maps them to their own folders', () => {
+    const root = ilmFixtureRoot()
+
+    try {
+      const sources = discoverEnglishSources(root)
+      const byKind = new Map(sources.map((source) => [`${source.kind}:${source.slug}`, source]))
+
+      expect(sources).toHaveLength(2)
+      const archive = byKind.get('ilm-archive:seera')!
+      const lesson = byKind.get('ilm-lesson:seera/01-intro')!
+
+      expect(destinationFor(archive, 'ar', root)).toMatch(/src\/content\/3lm\/seera\/index\.ar\.md$/)
+      expect(destinationFor(lesson, 'ar', root)).toMatch(/src\/content\/3lm\/seera\/01-intro\/index\.ar\.md$/)
+      expect(promptPathFor(archive, 'it', root)).toMatch(/translation-prompts\/it\/3lm\/seera\.prompt\.md$/)
+      expect(promptPathFor(lesson, 'it', root)).toMatch(/translation-prompts\/it\/3lm\/seera\/01-intro\.prompt\.md$/)
+    } finally {
+      rmSync(root, { recursive: true, force: true })
+    }
+  })
+
+  test('requires every 3lm archive and lesson to be translated', () => {
+    const root = ilmFixtureRoot()
+
+    try {
+      expect(validateTranslations(root)).toEqual([
+        'Missing translation: src/content/3lm/seera/01-intro/index.it.md',
+        'Missing translation: src/content/3lm/seera/01-intro/index.ar.md',
+        'Missing translation: src/content/3lm/seera/01-intro/index.zh.md',
+        'Missing translation: src/content/3lm/seera/index.it.md',
+        'Missing translation: src/content/3lm/seera/index.ar.md',
+        'Missing translation: src/content/3lm/seera/index.zh.md',
+      ])
+
+      for (const dir of ['src/content/3lm/seera', 'src/content/3lm/seera/01-intro']) {
+        const english = readFileSync(join(root, dir, 'index.en.md'), 'utf8')
+        for (const lang of ['it', 'ar', 'zh']) {
+          writeFileSync(join(root, dir, `index.${lang}.md`), english)
+        }
+      }
+
+      expect(validateTranslations(root)).toEqual([])
     } finally {
       rmSync(root, { recursive: true, force: true })
     }

@@ -7,6 +7,7 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import expressiveCode from 'astro-expressive-code'
 import siteConfig from './src/site.config'
+import { defaultLang, ilmSegment, isUnlistedPath } from './src/i18n'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import remarkDescription from './src/plugins/remark-description'/* Add description to frontmatter */
 import remarkReadingTime from './src/plugins/remark-reading-time'/* Add reading time to frontmatter */
@@ -32,6 +33,11 @@ export default defineConfig({
   // URL in dev and on-demand rendering); generated links stay slash-less.
   trailingSlash: siteConfig.trailingSlashes ? 'always' : 'ignore',
   prefetch: true,
+
+  // Short, shareable entry point to the unlisted study section.
+  redirects: {
+    [`/${ilmSegment}`]: `/${defaultLang}/${ilmSegment}`,
+  },
 
   markdown: {
     remarkPlugins: [
@@ -71,7 +77,8 @@ export default defineConfig({
   },
 
   integrations: [
-    sitemap(),
+    // Unlisted pages (e.g. /en/3lm) must never be advertised in the sitemap.
+    sitemap({ filter: (page) => !isUnlistedPath(new URL(page).pathname) }),
     expressiveCode({
       themes: siteConfig.themes.include,
       useDarkModeMediaQuery: false,

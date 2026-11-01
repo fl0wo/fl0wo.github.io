@@ -105,3 +105,6 @@ fabric.properties
 
 # pnpm local store (created by sandboxed installs)
 .pnpm-store/
+
+# wrangler local dev state
+.wrangler/

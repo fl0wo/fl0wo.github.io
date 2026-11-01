@@ -1,8 +1,12 @@
 {
   "name": "multiterm-astro",
   "compatibility_date": "2026-05-19",
+  // Runs only for /3lm paths (see assets.run_worker_first): blocks bots, adds X-Robots-Tag.
+  "main": "./worker/index.ts",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/3lm", "/3lm/*", "/*/3lm", "/*/3lm/*"]
   },
   "observability": {
     "enabled": true

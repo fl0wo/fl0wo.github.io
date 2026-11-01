@@ -23,3 +23,12 @@
 - Site uses SST for AWS deployment/hosting
 - Domain: floriansabani.com (and www redirect)
 - Project name in AWS: fl0wosite
+
+## 3lm (unlisted study notes)
+- Reachable only by URL: `/{lang}/3lm` (and `/3lm` → `/en/3lm`). Never link it from public pages.
+- Archive: `src/content/3lm/<archive>/index.<lang>.md` (title, description, order, draft).
+- Lesson: `src/content/3lm/<archive>/<lesson>/index.<lang>.md` (article fields + unique `lesson` number).
+- Every file needs en/it/ar/zh versions (`pnpm i18n:prompts` writes translation prompts; the build validates).
+- "Unlisted" is enforced centrally: `isUnlistedRoute`/`isUnlistedPath` in `src/i18n.ts` drive noindex meta, sitemap exclusion; lesson pages omit `data-pagefind-body`.
+- At the edge, `worker/index.ts` runs only for /3lm paths (`run_worker_first` in wrangler.jsonc): bots get 403, browsers get `X-Robots-Tag: noindex`. The main module may export only handlers; helpers live in `worker/guard.ts`.
+- The GitHub repo is public: anything committed under `src/content/3lm` is readable there.

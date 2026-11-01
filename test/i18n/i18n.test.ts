@@ -3,13 +3,17 @@ import {
   alternateLinks,
   assertLang,
   defaultLang,
+  formatPlural,
+  formatUi,
   isLang,
+  isUnlistedPath,
+  isUnlistedRoute,
   languageMeta,
   routePath,
   supportedLangs,
   ui,
 } from '../../src/i18n'
-import { parseLocalizedId } from '../../src/content-id'
+import { parseLessonSlug, parseLocalizedId } from '../../src/content-id'
 
 describe('language metadata', () => {
   test('defines the supported languages and default language', () => {
@@ -84,5 +88,70 @@ describe('localized route helpers', () => {
       { lang: 'zh', href: '/zh/posts/hello' },
       { lang: 'x-default', href: '/en/posts/hello' },
     ])
+  })
+})
+
+describe('3lm (unlisted study section)', () => {
+  test('builds language-prefixed routes under /3lm', () => {
+    expect(routePath('en', { type: 'ilmIndex' })).toBe('/en/3lm')
+    expect(routePath('ar', { type: 'ilmArchive', archive: 'seera' })).toBe('/ar/3lm/seera')
+    expect(
+      routePath('zh', { type: 'ilmLesson', archive: 'seera', lesson: '01-the-year-of-the-elephant' }),
+    ).toBe('/zh/3lm/seera/01-the-year-of-the-elephant')
+  })
+
+  test('marks every 3lm route, and only those, as unlisted', () => {
+    expect(isUnlistedRoute({ type: 'ilmIndex' })).toBe(true)
+    expect(isUnlistedRoute({ type: 'ilmArchive', archive: 'seera' })).toBe(true)
+    expect(isUnlistedRoute({ type: 'ilmLesson', archive: 'seera', lesson: 'x' })).toBe(true)
+    expect(isUnlistedRoute({ type: 'posts' })).toBe(false)
+    expect(isUnlistedRoute({ type: 'post', slug: '3lm' })).toBe(false)
+  })
+
+  test('recognizes unlisted paths for build tooling such as the sitemap', () => {
+    for (const path of ['/3lm', '/3lm/', '/en/3lm', '/it/3lm/', '/ar/3lm/seera', '/zh/3lm/seera/01-x']) {
+      expect(isUnlistedPath(path)).toBe(true)
+    }
+    for (const path of ['/', '/en/', '/en/posts', '/en/posts/3lm', '/en/3lm-notes', '/de/3lm', '/en/tags/3lm']) {
+      expect(isUnlistedPath(path)).toBe(false)
+    }
+  })
+
+  test('agrees with routePath for every unlisted route', () => {
+    for (const lang of supportedLangs) {
+      expect(isUnlistedPath(routePath(lang, { type: 'ilmIndex' }))).toBe(true)
+      expect(isUnlistedPath(routePath(lang, { type: 'ilmLesson', archive: 'a', lesson: 'b' }))).toBe(true)
+      expect(isUnlistedPath(routePath(lang, { type: 'posts' }))).toBe(false)
+    }
+  })
+
+  test('parses lesson ids into archive and lesson slugs', () => {
+    const { slug } = parseLocalizedId('seera/01-the-year-of-the-elephant/index.en')
+    expect(slug).toBe('seera/01-the-year-of-the-elephant')
+    expect(parseLessonSlug(slug)).toEqual({ archive: 'seera', lesson: '01-the-year-of-the-elephant' })
+    expect(() => parseLessonSlug('seera')).toThrow('3lm/<archive>/<lesson>')
+    expect(() => parseLessonSlug('a/b/c')).toThrow('3lm/<archive>/<lesson>')
+  })
+
+  test('formats localized lesson labels', () => {
+    expect(formatUi(ui.en.lessonNumber, { n: 3 })).toBe('Lesson 3')
+    expect(formatUi(ui.zh.lessonNumber, { n: 3 })).toBe('第 3 课')
+    expect(formatUi('{missing} stays', {})).toBe('{missing} stays')
+    for (const lang of supportedLangs) {
+      expect(ui[lang].lessonNumber).toContain('{n}')
+      for (const variant of Object.values(ui[lang].lessonCount)) {
+        expect(variant).toContain('{n}')
+      }
+    }
+  })
+
+  test('pluralizes lesson counts per language', () => {
+    expect(formatPlural('en', ui.en.lessonCount, 1)).toBe('1 lesson')
+    expect(formatPlural('en', ui.en.lessonCount, 2)).toBe('2 lessons')
+    expect(formatPlural('en', ui.en.lessonCount, 0)).toBe('0 lessons')
+    expect(formatPlural('it', ui.it.lessonCount, 1)).toBe('1 lezione')
+    expect(formatPlural('it', ui.it.lessonCount, 12)).toBe('12 lezioni')
+    expect(formatPlural('ar', ui.ar.lessonCount, 3)).toBe('عدد الدروس: 3')
+    expect(formatPlural('zh', ui.zh.lessonCount, 3)).toBe('共 3 课')
   })
 })

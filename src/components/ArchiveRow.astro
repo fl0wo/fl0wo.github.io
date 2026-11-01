@@ -1,0 +1,33 @@
+---
+import { dateString } from '~/utils'
+
+interface Props {
+  title: string
+  href: string
+  /** Muted prefix before the title, e.g. a lesson number. */
+  label?: string
+  /** Right-hand side: a date, or free text such as a lesson count. */
+  date?: Date
+  aside?: string
+}
+
+const { title, href, label, date, aside } = Astro.props
+---
+
+<article class="w-full py-2 border-b border-accent/10">
+  <div class="flex justify-between items-center gap-4">
+    <h3 class="text-base font-normal flex-1">
+      {label && <span class="text-foreground/60 me-2 tabular-nums">{label}</span>}
+      <a href={href} class="hover:text-accent transition-colors">
+        {title}
+      </a>
+    </h3>
+    {
+      date ? (
+        <time class="text-sm text-foreground/60 shrink-0">{dateString(date)}</time>
+      ) : (
+        aside && <span class="text-sm text-foreground/60 shrink-0">{aside}</span>
+      )
+    }
+  </div>
+</article>

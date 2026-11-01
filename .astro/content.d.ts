@@ -189,6 +189,22 @@ declare module 'astro:content' {
   rendered?: RenderedContent;
   filePath?: string;
 }>;
+"ilmArchives": Record<string, {
+  id: string;
+  body?: string;
+  collection: "ilmArchives";
+  data: InferEntrySchema<"ilmArchives">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"ilmLessons": Record<string, {
+  id: string;
+  body?: string;
+  collection: "ilmLessons";
+  data: InferEntrySchema<"ilmLessons">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
 "pages": Record<string, {
   id: string;
   body?: string;

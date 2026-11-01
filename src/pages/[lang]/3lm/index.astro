@@ -1,0 +1,31 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Layout from '~/layouts/Layout.astro'
+import PageHeader from '~/components/PageHeader.astro'
+import ArchiveRow from '~/components/ArchiveRow.astro'
+import { getIlmArchives } from '~/ilm'
+import { assertLang, formatPlural, supportedLangs, ui } from '~/i18n'
+
+export const getStaticPaths = (() => {
+  return supportedLangs.map((lang) => ({ params: { lang } }))
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const t = ui[lang]
+const archives = await getIlmArchives(lang)
+---
+
+<Layout lang={lang} route={{ type: 'ilmIndex' }} title={t.ilmTitle} description={t.ilmDescription}>
+  <div class="mt-2 sm:mt-0">
+    <PageHeader titlePieces={[t.ilmTitle]} />
+    {
+      archives.map((archive) => (
+        <ArchiveRow
+          title={archive.entry.data.title}
+          href={archive.href}
+          aside={formatPlural(lang, t.lessonCount, archive.lessons.length)}
+        />
+      ))
+    }
+  </div>
+</Layout>

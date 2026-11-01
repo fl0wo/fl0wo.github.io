@@ -9,7 +9,7 @@ import {
   supportedLangs,
 } from '../../src/i18n'
 
-export type ContentKind = 'home' | 'addendum' | 'page' | 'post'
+export type ContentKind = 'home' | 'addendum' | 'page' | 'post' | 'ilm-archive' | 'ilm-lesson'
 export type TranslationLang = Exclude<Lang, 'en'>
 
 export type SourceFile = {
@@ -147,78 +147,87 @@ function sourceContentForPrompt(source: SourceFile): string {
   }
 }
 
+type ContentKindSpec = {
+  kind: ContentKind
+  /**
+   * Matches a path relative to src/content. Named groups: `slug` (omit for
+   * singletons, which use `fixedSlug`) and `locale` (absent for legacy unsuffixed files).
+   */
+  pattern: RegExp
+  fixedSlug?: string
+  /** Directory, relative to src/content, holding every language of this source. */
+  directory: (slug: string) => string
+  /** Folder under translation-prompts/<lang>/. */
+  promptFolder: string
+}
+
+const localizedFile = String.raw`(?:\.(?<locale>[^.]+))?\.(?:md|mdx)$`
+
+/** Every translatable content kind. Adding a content section means adding one entry here. */
+const contentKinds: ContentKindSpec[] = [
+  {
+    kind: 'home',
+    pattern: new RegExp(String.raw`^home(?:/index)?${localizedFile}`),
+    fixedSlug: 'home',
+    directory: () => 'home',
+    promptFolder: 'home',
+  },
+  {
+    kind: 'addendum',
+    pattern: new RegExp(String.raw`^addendum(?:/index)?${localizedFile}`),
+    fixedSlug: 'addendum',
+    directory: () => 'addendum',
+    promptFolder: 'addendum',
+  },
+  {
+    kind: 'page',
+    pattern: new RegExp(String.raw`^pages/(?<slug>[^/]+)/index${localizedFile}`),
+    directory: (slug) => `pages/${slug}`,
+    promptFolder: 'pages',
+  },
+  {
+    kind: 'post',
+    pattern: new RegExp(String.raw`^posts/(?<slug>[^/]+)/index${localizedFile}`),
+    directory: (slug) => `posts/${slug}`,
+    promptFolder: 'posts',
+  },
+  {
+    kind: 'ilm-archive',
+    pattern: new RegExp(String.raw`^3lm/(?<slug>[^/]+)/index${localizedFile}`),
+    directory: (slug) => `3lm/${slug}`,
+    promptFolder: '3lm',
+  },
+  {
+    kind: 'ilm-lesson',
+    pattern: new RegExp(String.raw`^3lm/(?<slug>[^/]+/[^/]+)/index${localizedFile}`),
+    directory: (slug) => `3lm/${slug}`,
+    promptFolder: '3lm',
+  },
+]
+
+function kindSpec(kind: ContentKind): ContentKindSpec {
+  const spec = contentKinds.find((candidate) => candidate.kind === kind)
+  if (!spec) throw new Error(`Unsupported kind: ${kind}`)
+  return spec
+}
+
 function parseContentSource(relativePath: string, sourcePath: string): SourceFile | undefined {
   const normalizedPath = relativePath.split(sep).join('/')
-  const fileName = basename(normalizedPath)
-  const extension = fileName.endsWith('.mdx') ? '.mdx' : '.md'
-  const parsed = parseMarkdown(sourcePath)
 
-  if (normalizedPath.match(/^home(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)) {
-    const match = normalizedPath.match(/^home(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)
-    const locale = match?.[1]
+  for (const spec of contentKinds) {
+    const match = normalizedPath.match(spec.pattern)
+    if (!match) continue
 
-    if (locale && locale !== 'en') return undefined
+    const locale = match.groups?.locale
+    if (locale && locale !== defaultLang) return undefined
 
+    const parsed = parseMarkdown(sourcePath)
     return {
       sourcePath,
       relativePath,
-      slug: 'home',
-      kind: 'home',
-      extension: extension,
-      content: parsed.content,
-      data: parsed.data,
-      frontmatterError: parsed.frontmatterError,
-    } satisfies SourceFile
-  }
-
-  if (normalizedPath.match(/^addendum(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)) {
-    const match = normalizedPath.match(/^addendum(?:\/index)?(?:\.([^.]+))?\.(md|mdx)$/)
-    const locale = match?.[1]
-
-    if (locale && locale !== 'en') return undefined
-
-    return {
-      sourcePath,
-      relativePath,
-      slug: 'addendum',
-      kind: 'addendum',
-      extension: extension,
-      content: parsed.content,
-      data: parsed.data,
-      frontmatterError: parsed.frontmatterError,
-    } satisfies SourceFile
-  }
-
-  const pageMatch = normalizedPath.match(/^pages\/([^/]+)\/index(?:\.([^.]+))?\.(md|mdx)$/)
-  if (pageMatch) {
-    const [, slug, locale] = pageMatch
-
-    if (locale && locale !== 'en') return undefined
-
-    return {
-      sourcePath,
-      relativePath,
-      slug,
-      kind: 'page',
-      extension,
-      content: parsed.content,
-      data: parsed.data,
-      frontmatterError: parsed.frontmatterError,
-    } satisfies SourceFile
-  }
-
-  const postMatch = normalizedPath.match(/^posts\/([^/]+)\/index(?:\.([^.]+))?\.(md|mdx)$/)
-  if (postMatch) {
-    const [, slug, locale] = postMatch
-
-    if (locale && locale !== 'en') return undefined
-
-    return {
-      sourcePath,
-      relativePath,
-      slug,
-      kind: 'post',
-      extension: extension,
+      slug: match.groups?.slug ?? spec.fixedSlug!,
+      kind: spec.kind,
+      extension: normalizedPath.endsWith('.mdx') ? '.mdx' : '.md',
       content: parsed.content,
       data: parsed.data,
       frontmatterError: parsed.frontmatterError,
@@ -310,18 +319,7 @@ function destinationDirectoriesForSources(sources: SourceFile[], rootDir: string
 }
 
 function destinationDirectory(source: SourceFile, rootDir: string): string {
-  switch (source.kind) {
-    case 'home':
-      return join(rootDir, contentDir, 'home')
-    case 'addendum':
-      return join(rootDir, contentDir, 'addendum')
-    case 'post':
-      return join(rootDir, contentDir, 'posts', source.slug)
-    case 'page':
-      return join(rootDir, contentDir, 'pages', source.slug)
-    default:
-      throw new Error(`Unsupported kind: ${source.kind}`)
-  }
+  return join(rootDir, contentDir, kindSpec(source.kind).directory(source.slug))
 }
 
 export function destinationFor(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
@@ -333,8 +331,7 @@ export function destinationFor(source: SourceFile, lang: TranslationLang, rootDi
 }
 
 export function promptPathFor(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
-  const folder = source.kind === 'post' ? 'posts' : source.kind === 'page' ? 'pages' : source.kind
-  return join(rootDir, 'translation-prompts', lang, folder, `${source.slug}.prompt.md`)
+  return join(rootDir, 'translation-prompts', lang, kindSpec(source.kind).promptFolder, `${source.slug}.prompt.md`)
 }
 
 export function buildTranslationPrompt(source: SourceFile, lang: TranslationLang, rootDir = process.cwd()): string {
@@ -518,7 +515,10 @@ export function validateTranslations(rootDir = process.cwd()): string[] {
       const relativeDestination = relative(rootDir, destination)
 
       if (!existsSync(destination)) {
-        errors.push(`Missing translation: ${relativeDestination}`)
+        // Drafts never reach production, so they can be written in English first.
+        if (source.data.draft !== true) {
+          errors.push(`Missing translation: ${relativeDestination}`)
+        }
         continue
       }
 

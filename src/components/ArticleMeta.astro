@@ -1,0 +1,48 @@
+---
+import { dateString } from '~/utils'
+
+interface Props {
+  date: Date
+  author?: string
+  minutesRead?: string
+  /** Pill linking to the collection the article belongs to (series, archive...). */
+  badge?: { label: string; href: string }
+  class?: string
+}
+
+const { date, author, minutesRead, badge, class: className } = Astro.props
+---
+
+<div class:list={[className, 'text-foreground/80']}>
+  <div
+    class="flex flex-col gap-4 sm:gap-2 sm:flex-wrap items-start sm:items-center sm:flex-row"
+  >
+    {
+      badge && (
+        <a
+          class="shrink-0 rounded-2xl py-[3px] px-3.5 bg-foreground/1 me-2.5 hover:bg-foreground/5 transition-colors border-1 border-foreground/16 hover:border-foreground/20"
+          href={badge.href}
+        >
+          {badge.label}
+        </a>
+      )
+    }
+    <div class="shrink-0 pl-0.5 text-[17px] sm:text-base">
+      <time>{dateString(date)}</time>
+      {
+        author && (
+          <span class="before:content-['·'] before:font-bold before:inline-block before:mx-0.5">
+            {author}
+          </span>
+        )
+      }
+      {
+        minutesRead && (
+          <span class="before:content-['·'] before:inline-block before:mx-0.5">
+            {minutesRead}
+          </span>
+        )
+      }
+    </div>
+  </div>
+</div>

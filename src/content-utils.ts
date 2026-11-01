@@ -6,7 +6,7 @@ import type { Collation, CollationGroup } from './types'
 
 export { parseLocalizedId } from './content-id'
 
-type LocalizedCollection = 'posts' | 'pages' | 'home' | 'addendum'
+export type LocalizedCollection = 'posts' | 'pages' | 'home' | 'addendum' | 'ilmArchives' | 'ilmLessons'
 
 export function contentSlug(entry: CollectionEntry<LocalizedCollection>): string {
   return parseLocalizedId(entry.id).slug
@@ -18,8 +18,9 @@ export async function getLocalizedCollection<C extends LocalizedCollection>(
 ): Promise<CollectionEntry<C>[]> {
   return getCollection(collection, ({ id, data }) => {
     const parsed = parseLocalizedId(id)
-    const isDraftPost = collection === 'posts' && 'draft' in data && data.draft === true
-    return parsed.lang === lang && (collection !== 'posts' || !import.meta.env.PROD || !isDraftPost)
+    // Any collection with a `draft` field hides drafts from production builds.
+    const isDraft = 'draft' in data && data.draft === true
+    return parsed.lang === lang && !(import.meta.env.PROD && isDraft)
   })
 }
 

@@ -10,6 +10,7 @@ import crypto from 'crypto'
 import {
   alternateLinks,
   defaultLang,
+  isUnlistedRoute,
   languageMeta,
   routePath,
   type Lang,
@@ -27,6 +28,7 @@ interface Props {
 
 const { title, description, tags, author, lang = defaultLang, route } = Astro.props
 const meta = languageMeta[lang]
+const unlisted = route ? isUnlistedRoute(route) : false
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') // Remove trailing slash for consistency
 const pageType = Astro.url.pathname.startsWith(`/${lang}/posts/`) ? 'article' : 'website'
 const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title
@@ -151,6 +153,15 @@ let generatedCss: string = cssLines.join('\n')
     <meta name="twitter:description" content={pageDescription} />
     {pageImage && <meta name="twitter:image" content={pageImage} />}
     <meta name="keywords" content={pageKeywords} />
+    {
+      unlisted && (
+        <>
+          {/* Reachable by URL only: keep out of search engines, and don't leak this URL to other sites via Referer. */}
+          <meta name="robots" content="noindex, nofollow, noarchive" />
+          <meta name="referrer" content="no-referrer" />
+        </>
+      )
+    }
     <link rel="canonical" href={pageUrl} />
     {
       route &&

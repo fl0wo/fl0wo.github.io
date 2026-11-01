@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+import Layout from '~/layouts/Layout.astro'
+import PageHeader from '~/components/PageHeader.astro'
+import ArchiveRow from '~/components/ArchiveRow.astro'
+import { getIlmArchives } from '~/ilm'
+import { assertLang, supportedLangs, ui } from '~/i18n'
+
+export const getStaticPaths = (async () => {
+  const paths = []
+  for (const lang of supportedLangs) {
+    for (const archive of await getIlmArchives(lang)) {
+      paths.push({ params: { lang, archive: archive.slug }, props: { archive } })
+    }
+  }
+  return paths
+}) satisfies GetStaticPaths
+
+const lang = assertLang(Astro.params.lang!)
+const t = ui[lang]
+const { archive } = Astro.props
+const { title, description } = archive.entry.data
+const { Content: Intro } = await render(archive.entry)
+const hasIntro = Boolean(archive.entry.body?.trim())
+const numberWidth = String(archive.lessons.at(-1)?.number ?? 0).length
+---
+
+<Layout
+  lang={lang}
+  route={{ type: 'ilmArchive', archive: archive.slug }}
+  title={`${t.ilmTitle} / ${title}`}
+  description={description}
+>
+  <div class="mt-2 sm:mt-0">
+    <PageHeader titlePieces={[t.ilmTitle, title]} />
+    {
+      hasIntro && (
+        <div class="prose my-6">
+          <Intro />
+        </div>
+      )
+    }
+    {
+      archive.lessons.map((lesson) => (
+        <ArchiveRow
+          label={String(lesson.number).padStart(Math.max(2, numberWidth), '0')}
+          title={lesson.entry.data.title}
+          href={lesson.href}
+          date={lesson.entry.data.published}
+        />
+      ))
+    }
+  </div>
+</Layout>

@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { dateString } from '~/utils'
+import ArchiveRow from '~/components/ArchiveRow.astro'
 import { contentSlug } from '~/content-utils'
 import { defaultLang, routePath, type Lang } from '~/i18n'
 
@@ -10,18 +10,10 @@ interface Props {
 }
 
 const { post, lang = defaultLang } = Astro.props
-const articleLink = routePath(lang, { type: 'post', slug: contentSlug(post) })
 ---
 
-<article class="w-full py-2 border-b border-accent/10">
-  <div class="flex justify-between items-center gap-4">
-    <h3 class="text-base font-normal flex-1">
-      <a href={articleLink} class="hover:text-accent transition-colors">
-        {post.data.title}
-      </a>
-    </h3>
-    <time class="text-sm text-foreground/60 shrink-0">
-      {dateString(post.data.published)}
-    </time>
-  </div>
-</article>
+<ArchiveRow
+  title={post.data.title}
+  href={routePath(lang, { type: 'post', slug: contentSlug(post) })}
+  date={post.data.published}
+/>

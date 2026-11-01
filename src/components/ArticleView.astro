@@ -1,0 +1,47 @@
+---
+import type { ImageMetadata, MarkdownHeading } from 'astro'
+import { Image } from 'astro:assets'
+import TableOfContents from '~/components/TableOfContents.astro'
+
+interface Props {
+  title: string
+  /** id of the <h1>, used as the in-page anchor by previews. */
+  anchorId: string
+  headings: MarkdownHeading[]
+  toc: boolean
+  coverImage?: { src: ImageMetadata; alt: string }
+  /** Whether Pagefind indexes this article. Unlisted content must pass false. */
+  searchable: boolean
+}
+
+const { title, anchorId, headings, toc, coverImage, searchable } = Astro.props
+---
+
+<article class="max-w-full py-7.5" data-pagefind-body={searchable ? '' : undefined}>
+  {
+    coverImage && (
+      <Image
+        priority
+        layout="constrained"
+        src={coverImage.src}
+        alt={coverImage.alt}
+        class="w-full rounded-xl mb-5"
+      />
+    )
+  }
+  <div class="md:mx-2">
+    <h1 id={anchorId} class="mb-4 text-[1.75rem] text-heading1 font-semibold">
+      # {title}
+    </h1>
+    <div class="my-2 border-l-2 border-accent/80 pl-4 py-2">
+      <slot name="meta" />
+    </div>
+  </div>
+  <!-- <hr class="border-accent/10 border-2 rounded-xl hidden lg:block" /> -->
+  <div class="flex flex-col xl:gap-1 2xl:gap-18 xl:flex-row xl:items-start">
+    {toc && headings.length > 0 && <TableOfContents headings={headings} />}
+    <div class="mb-5 xl:min-w-full 2xl:min-w-full prose">
+      <slot />
+    </div>
+  </div>
+</article>

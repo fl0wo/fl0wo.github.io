@@ -610,3 +610,11 @@ article img {
     @apply border-accent cursor-pointer;
   }
 }
+
+/* Arabic passages (Qur'an, hadith) quoted inside articles: the monospace site font has no
+   Arabic glyphs, so use a proper Naskh face at a size where the diacritics stay legible. */
+.prose [lang='ar']:not(html) {
+  font-family: 'Noto Naskh Arabic', 'Geeza Pro', 'Amiri', 'Traditional Arabic', serif;
+  font-size: 1.4em;
+  line-height: 2;
+}

@@ -33,16 +33,6 @@
         "author": {
           "type": "string"
         },
-        "series": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
         "coverImage": {
           "type": "object",
           "properties": {
@@ -62,6 +52,16 @@
         "toc": {
           "type": "boolean",
           "default": true
+        },
+        "series": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
         },
         "$schema": {
           "type": "string"
