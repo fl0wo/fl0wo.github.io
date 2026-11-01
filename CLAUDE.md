@@ -30,5 +30,6 @@
 - Lesson: `src/content/3lm/<archive>/<lesson>/index.<lang>.md` (article fields + unique `lesson` number).
 - Every file needs en/it/ar/zh versions (`pnpm i18n:prompts` writes translation prompts; the build validates).
 - "Unlisted" is enforced centrally: `isUnlistedRoute`/`isUnlistedPath` in `src/i18n.ts` drive noindex meta, sitemap exclusion; lesson pages omit `data-pagefind-body`.
+- Link hadith citations to sunnah.com: `[Muslim 408](https://sunnah.com/muslim:408)` (slugs: bukhari, muslim, abudawud, tirmidhi, nasai, ibnmajah). Open each link in a browser before publishing: sunnah.com numbering can differ from other editions, some entries need a letter suffix (e.g. `2354a`), and it blocks curl.
 - At the edge, `worker/index.ts` runs only for /3lm paths (`run_worker_first` in wrangler.jsonc): bots get 403, browsers get `X-Robots-Tag: noindex`. The main module may export only handlers; helpers live in `worker/guard.ts`.
 - The GitHub repo is public: anything committed under `src/content/3lm` is readable there.

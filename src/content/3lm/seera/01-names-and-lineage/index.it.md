@@ -21,12 +21,12 @@ Perché iniziare tutto con essa: solo Allah basta a Sé stesso (*al-Qayyūm*, *a
 - La **shukr** (ringraziamento) è per qualcosa che si è ricevuto.
 - La **ḥamd** (lode) è per ciò che Egli *è*, prima di ogni dono.
 - La ḥamd è la porta verso Allah: per questo Al-Fātiḥa, l'ingresso del Corano, si apre con *al-ḥamdu lillāhi rabbi l-ʿālamīn*.
-- Ogni questione importante non iniziata con la Sua lode è privata della benedizione (Abū Dāwūd 4840, Ibn Mājah 1894; gli studiosi divergono sulla sua autenticità).
+- Ogni questione importante non iniziata con la Sua lode è privata della benedizione ([Abū Dāwūd 4840](https://sunnah.com/abudawud:4840), [Ibn Mājah 1894](https://sunnah.com/ibnmajah:1894); gli studiosi divergono sulla sua autenticità).
 
 ## La ṣalāh sul Profeta ﷺ
 
-- Inviane una, e Allah ne invia dieci su di te (Muslim 408).
-- I più vicini a lui nel Giorno del Giudizio saranno quelli che ne hanno inviate di più (Tirmidhī 484).
+- Inviane una, e Allah ne invia dieci su di te ([Muslim 408](https://sunnah.com/muslim:408)).
+- I più vicini a lui nel Giorno del Giudizio saranno quelli che ne hanno inviate di più ([Tirmidhī 484](https://sunnah.com/tirmidhi:484)).
 - Amarlo senza la ṣalāh è una contraddizione: è la ṣalāh che fa spazio a quell'amore nel cuore.
 
 ## Cosa significa "Sīra"
@@ -37,11 +37,11 @@ Perché iniziare tutto con essa: solo Allah basta a Sé stesso (*al-Qayyūm*, *a
 2. **Intermedia**: dalla sua nascita alla sua morte ﷺ.
 3. **Ristretta**: dalla prima rivelazione alla sua morte ﷺ.
 
-Perché studiarla: la sua vita è la guida di Allah messa in pratica. ʿĀʾisha disse *«il suo carattere era il Corano»* (Muslim 746), e nessuno crede veramente finché lui ﷺ non gli è più caro di chiunque altro (Bukhārī 15). Conoscerlo è il modo per arrivare ad amarlo.
+Perché studiarla: la sua vita è la guida di Allah messa in pratica. ʿĀʾisha disse *«il suo carattere era il Corano»* ([Muslim 746](https://sunnah.com/muslim:746)), e nessuno crede veramente finché lui ﷺ non gli è più caro di chiunque altro ([Bukhārī 15](https://sunnah.com/bukhari:15)). Conoscerlo è il modo per arrivare ad amarlo.
 
 ## I suoi cinque nomi
 
-Dall'hadith di Jubayr ibn Muṭʿim (Bukhārī 3532, Muslim 2354):
+Dall'hadith di Jubayr ibn Muṭʿim ([Bukhārī 3532](https://sunnah.com/bukhari:3532), [Muslim 2354](https://sunnah.com/muslim:2354)):
 
 1. **Muḥammad**: il lodato, lodato da Allah e da tutto il creato.
 2. **Aḥmad**: colui che loda Allah più di tutti, e quindi Lo conosce meglio.
@@ -60,7 +60,7 @@ Da memorizzare, fino a ʿAdnān:
 > Muḥammad ibn ʿAbdillāh ibn ʿAbd al-Muṭṭalib ibn Hāshim ibn ʿAbd Manāf ibn Quṣayy ibn Kilāb ibn Murrah ibn Kaʿb ibn Luʾayy ibn Ghālib ibn Fihr ibn Mālik ibn an-Naḍr ibn Kinānah ibn Khuzaymah ibn Mudrikah ibn Ilyās ibn Muḍar ibn Nizār ibn Maʿadd ibn ʿAdnān
 
 - Fino a ʿAdnān la catena è certa; da ʿAdnān a Ismāʿīl gli studiosi divergono.
-- Allah scelse Kinānah tra i figli di Ismāʿīl, i Quraysh da Kinānah, i Banū Hāshim dai Quraysh, e lui ﷺ dai Banū Hāshim (Muslim 2276).
+- Allah scelse Kinānah tra i figli di Ismāʿīl, i Quraysh da Kinānah, i Banū Hāshim dai Quraysh, e lui ﷺ dai Banū Hāshim ([Muslim 2276](https://sunnah.com/muslim:2276)).
 - **Padre**: ʿAbdullāh ibn ʿAbd al-Muṭṭalib. **Madre**: Āminah bint Wahb. Lui ﷺ fu l'unico figlio di entrambi.
 
 ### ʿAbd al-Muṭṭalib, suo nonno

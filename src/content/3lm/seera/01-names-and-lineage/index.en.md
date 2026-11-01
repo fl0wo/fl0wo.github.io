@@ -21,12 +21,12 @@ Why begin everything with it: only Allah is self-sufficient (*al-Qayyūm*, *aṣ
 - **Shukr** (thanks) is for something received.
 - **Ḥamd** (praise) is for who He *is*, before any gift.
 - Ḥamd is the gateway to Allah, which is why Al-Fātiḥah, the entrance to the Qur'an, opens with *al-ḥamdu lillāhi rabbi l-ʿālamīn*.
-- Any important matter not begun with His praise is cut off from blessing (Abū Dāwūd 4840, Ibn Mājah 1894; scholars differ on its authenticity).
+- Any important matter not begun with His praise is cut off from blessing ([Abū Dāwūd 4840](https://sunnah.com/abudawud:4840), [Ibn Mājah 1894](https://sunnah.com/ibnmajah:1894); scholars differ on its authenticity).
 
 ## Ṣalāh on the Prophet ﷺ
 
-- Send one, and Allah sends ten upon you (Muslim 408).
-- The closest to him on the Day of Judgment are those who sent the most (Tirmidhī 484).
+- Send one, and Allah sends ten upon you ([Muslim 408](https://sunnah.com/muslim:408)).
+- The closest to him on the Day of Judgment are those who sent the most ([Tirmidhī 484](https://sunnah.com/tirmidhi:484)).
 - Love for him without ṣalāh is a contradiction: ṣalāh is what makes room for that love in the heart.
 
 ## What "Sīrah" means
@@ -37,11 +37,11 @@ Why begin everything with it: only Allah is self-sufficient (*al-Qayyūm*, *aṣ
 2. **Middle**: from his birth to his death ﷺ.
 3. **Narrow**: from the first revelation to his death ﷺ.
 
-Why study it: his life is Allah's guidance put into practice. ʿĀʾishah said *"his character was the Qur'an"* (Muslim 746), and no one truly believes until he ﷺ is more beloved to them than anyone else (Bukhārī 15). Knowing him is how you come to love him.
+Why study it: his life is Allah's guidance put into practice. ʿĀʾishah said *"his character was the Qur'an"* ([Muslim 746](https://sunnah.com/muslim:746)), and no one truly believes until he ﷺ is more beloved to them than anyone else ([Bukhārī 15](https://sunnah.com/bukhari:15)). Knowing him is how you come to love him.
 
 ## His five names
 
-From the hadith of Jubayr ibn Muṭʿim (Bukhārī 3532, Muslim 2354):
+From the hadith of Jubayr ibn Muṭʿim ([Bukhārī 3532](https://sunnah.com/bukhari:3532), [Muslim 2354](https://sunnah.com/muslim:2354)):
 
 1. **Muḥammad**: the praised one, praised by Allah and by all creation.
 2. **Aḥmad**: the one who praises Allah the most, and so knows Him best.
@@ -60,7 +60,7 @@ To memorize, up to ʿAdnān:
 > Muḥammad ibn ʿAbdillāh ibn ʿAbd al-Muṭṭalib ibn Hāshim ibn ʿAbd Manāf ibn Quṣayy ibn Kilāb ibn Murrah ibn Kaʿb ibn Luʾayy ibn Ghālib ibn Fihr ibn Mālik ibn an-Naḍr ibn Kinānah ibn Khuzaymah ibn Mudrikah ibn Ilyās ibn Muḍar ibn Nizār ibn Maʿadd ibn ʿAdnān
 
 - Up to ʿAdnān the chain is certain; from ʿAdnān to Ismāʿīl, scholars differ.
-- Allah chose Kinānah from the children of Ismāʿīl, Quraysh from Kinānah, Banū Hāshim from Quraysh, and him ﷺ from Banū Hāshim (Muslim 2276).
+- Allah chose Kinānah from the children of Ismāʿīl, Quraysh from Kinānah, Banū Hāshim from Quraysh, and him ﷺ from Banū Hāshim ([Muslim 2276](https://sunnah.com/muslim:2276)).
 - **Father**: ʿAbdullāh ibn ʿAbd al-Muṭṭalib. **Mother**: Āminah bint Wahb. He ﷺ was the only child of both.
 
 ### ʿAbd al-Muṭṭalib, his grandfather
